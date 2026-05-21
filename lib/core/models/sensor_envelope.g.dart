@@ -6,8 +6,8 @@ part of 'sensor_envelope.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SensorEnvelopeImpl _$$SensorEnvelopeImplFromJson(Map<String, dynamic> json) =>
-    _$SensorEnvelopeImpl(
+_SensorEnvelope _$SensorEnvelopeFromJson(Map<String, dynamic> json) =>
+    _SensorEnvelope(
       schemaVersion: json['schemaVersion'] as String,
       messageId: json['messageId'] as String,
       projectId: json['projectId'] as String,
@@ -19,8 +19,7 @@ _$SensorEnvelopeImpl _$$SensorEnvelopeImplFromJson(Map<String, dynamic> json) =>
       payload: json['payload'] as Map<String, dynamic>,
     );
 
-Map<String, dynamic> _$$SensorEnvelopeImplToJson(
-        _$SensorEnvelopeImpl instance) =>
+Map<String, dynamic> _$SensorEnvelopeToJson(_SensorEnvelope instance) =>
     <String, dynamic>{
       'schemaVersion': instance.schemaVersion,
       'messageId': instance.messageId,

@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,262 +9,284 @@ part of 'gnss_payload.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-GnssPayload _$GnssPayloadFromJson(Map<String, dynamic> json) {
-  return _GnssPayload.fromJson(json);
-}
 
 /// @nodoc
 mixin _$GnssPayload {
-  double get displacementXMm => throw _privateConstructorUsedError;
-  double get displacementYMm => throw _privateConstructorUsedError;
-  double get displacementZMm => throw _privateConstructorUsedError;
-  double get displacementHorizontalMm => throw _privateConstructorUsedError;
-  double get cumulativeDisplacementMm => throw _privateConstructorUsedError;
-  int get fixQuality => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $GnssPayloadCopyWith<GnssPayload> get copyWith =>
-      throw _privateConstructorUsedError;
+ double get displacementXMm; double get displacementYMm; double get displacementZMm; double get displacementHorizontalMm; double get cumulativeDisplacementMm; int get fixQuality;
+/// Create a copy of GnssPayload
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$GnssPayloadCopyWith<GnssPayload> get copyWith => _$GnssPayloadCopyWithImpl<GnssPayload>(this as GnssPayload, _$identity);
+
+  /// Serializes this GnssPayload to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GnssPayload&&(identical(other.displacementXMm, displacementXMm) || other.displacementXMm == displacementXMm)&&(identical(other.displacementYMm, displacementYMm) || other.displacementYMm == displacementYMm)&&(identical(other.displacementZMm, displacementZMm) || other.displacementZMm == displacementZMm)&&(identical(other.displacementHorizontalMm, displacementHorizontalMm) || other.displacementHorizontalMm == displacementHorizontalMm)&&(identical(other.cumulativeDisplacementMm, cumulativeDisplacementMm) || other.cumulativeDisplacementMm == cumulativeDisplacementMm)&&(identical(other.fixQuality, fixQuality) || other.fixQuality == fixQuality));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,displacementXMm,displacementYMm,displacementZMm,displacementHorizontalMm,cumulativeDisplacementMm,fixQuality);
+
+@override
+String toString() {
+  return 'GnssPayload(displacementXMm: $displacementXMm, displacementYMm: $displacementYMm, displacementZMm: $displacementZMm, displacementHorizontalMm: $displacementHorizontalMm, cumulativeDisplacementMm: $cumulativeDisplacementMm, fixQuality: $fixQuality)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $GnssPayloadCopyWith<$Res> {
-  factory $GnssPayloadCopyWith(
-          GnssPayload value, $Res Function(GnssPayload) then) =
-      _$GnssPayloadCopyWithImpl<$Res, GnssPayload>;
-  @useResult
-  $Res call(
-      {double displacementXMm,
-      double displacementYMm,
-      double displacementZMm,
-      double displacementHorizontalMm,
-      double cumulativeDisplacementMm,
-      int fixQuality});
-}
+abstract mixin class $GnssPayloadCopyWith<$Res>  {
+  factory $GnssPayloadCopyWith(GnssPayload value, $Res Function(GnssPayload) _then) = _$GnssPayloadCopyWithImpl;
+@useResult
+$Res call({
+ double displacementXMm, double displacementYMm, double displacementZMm, double displacementHorizontalMm, double cumulativeDisplacementMm, int fixQuality
+});
 
+
+
+
+}
 /// @nodoc
-class _$GnssPayloadCopyWithImpl<$Res, $Val extends GnssPayload>
+class _$GnssPayloadCopyWithImpl<$Res>
     implements $GnssPayloadCopyWith<$Res> {
-  _$GnssPayloadCopyWithImpl(this._value, this._then);
+  _$GnssPayloadCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final GnssPayload _self;
+  final $Res Function(GnssPayload) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? displacementXMm = null,
-    Object? displacementYMm = null,
-    Object? displacementZMm = null,
-    Object? displacementHorizontalMm = null,
-    Object? cumulativeDisplacementMm = null,
-    Object? fixQuality = null,
-  }) {
-    return _then(_value.copyWith(
-      displacementXMm: null == displacementXMm
-          ? _value.displacementXMm
-          : displacementXMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      displacementYMm: null == displacementYMm
-          ? _value.displacementYMm
-          : displacementYMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      displacementZMm: null == displacementZMm
-          ? _value.displacementZMm
-          : displacementZMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      displacementHorizontalMm: null == displacementHorizontalMm
-          ? _value.displacementHorizontalMm
-          : displacementHorizontalMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      cumulativeDisplacementMm: null == cumulativeDisplacementMm
-          ? _value.cumulativeDisplacementMm
-          : cumulativeDisplacementMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      fixQuality: null == fixQuality
-          ? _value.fixQuality
-          : fixQuality // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
+/// Create a copy of GnssPayload
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? displacementXMm = null,Object? displacementYMm = null,Object? displacementZMm = null,Object? displacementHorizontalMm = null,Object? cumulativeDisplacementMm = null,Object? fixQuality = null,}) {
+  return _then(_self.copyWith(
+displacementXMm: null == displacementXMm ? _self.displacementXMm : displacementXMm // ignore: cast_nullable_to_non_nullable
+as double,displacementYMm: null == displacementYMm ? _self.displacementYMm : displacementYMm // ignore: cast_nullable_to_non_nullable
+as double,displacementZMm: null == displacementZMm ? _self.displacementZMm : displacementZMm // ignore: cast_nullable_to_non_nullable
+as double,displacementHorizontalMm: null == displacementHorizontalMm ? _self.displacementHorizontalMm : displacementHorizontalMm // ignore: cast_nullable_to_non_nullable
+as double,cumulativeDisplacementMm: null == cumulativeDisplacementMm ? _self.cumulativeDisplacementMm : cumulativeDisplacementMm // ignore: cast_nullable_to_non_nullable
+as double,fixQuality: null == fixQuality ? _self.fixQuality : fixQuality // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-abstract class _$$GnssPayloadImplCopyWith<$Res>
-    implements $GnssPayloadCopyWith<$Res> {
-  factory _$$GnssPayloadImplCopyWith(
-          _$GnssPayloadImpl value, $Res Function(_$GnssPayloadImpl) then) =
-      __$$GnssPayloadImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {double displacementXMm,
-      double displacementYMm,
-      double displacementZMm,
-      double displacementHorizontalMm,
-      double cumulativeDisplacementMm,
-      int fixQuality});
 }
 
-/// @nodoc
-class __$$GnssPayloadImplCopyWithImpl<$Res>
-    extends _$GnssPayloadCopyWithImpl<$Res, _$GnssPayloadImpl>
-    implements _$$GnssPayloadImplCopyWith<$Res> {
-  __$$GnssPayloadImplCopyWithImpl(
-      _$GnssPayloadImpl _value, $Res Function(_$GnssPayloadImpl) _then)
-      : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? displacementXMm = null,
-    Object? displacementYMm = null,
-    Object? displacementZMm = null,
-    Object? displacementHorizontalMm = null,
-    Object? cumulativeDisplacementMm = null,
-    Object? fixQuality = null,
-  }) {
-    return _then(_$GnssPayloadImpl(
-      displacementXMm: null == displacementXMm
-          ? _value.displacementXMm
-          : displacementXMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      displacementYMm: null == displacementYMm
-          ? _value.displacementYMm
-          : displacementYMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      displacementZMm: null == displacementZMm
-          ? _value.displacementZMm
-          : displacementZMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      displacementHorizontalMm: null == displacementHorizontalMm
-          ? _value.displacementHorizontalMm
-          : displacementHorizontalMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      cumulativeDisplacementMm: null == cumulativeDisplacementMm
-          ? _value.cumulativeDisplacementMm
-          : cumulativeDisplacementMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      fixQuality: null == fixQuality
-          ? _value.fixQuality
-          : fixQuality // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+/// Adds pattern-matching-related methods to [GnssPayload].
+extension GnssPayloadPatterns on GnssPayload {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _GnssPayload value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _GnssPayload() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _GnssPayload value)  $default,){
+final _that = this;
+switch (_that) {
+case _GnssPayload():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _GnssPayload value)?  $default,){
+final _that = this;
+switch (_that) {
+case _GnssPayload() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double displacementXMm,  double displacementYMm,  double displacementZMm,  double displacementHorizontalMm,  double cumulativeDisplacementMm,  int fixQuality)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _GnssPayload() when $default != null:
+return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZMm,_that.displacementHorizontalMm,_that.cumulativeDisplacementMm,_that.fixQuality);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double displacementXMm,  double displacementYMm,  double displacementZMm,  double displacementHorizontalMm,  double cumulativeDisplacementMm,  int fixQuality)  $default,) {final _that = this;
+switch (_that) {
+case _GnssPayload():
+return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZMm,_that.displacementHorizontalMm,_that.cumulativeDisplacementMm,_that.fixQuality);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double displacementXMm,  double displacementYMm,  double displacementZMm,  double displacementHorizontalMm,  double cumulativeDisplacementMm,  int fixQuality)?  $default,) {final _that = this;
+switch (_that) {
+case _GnssPayload() when $default != null:
+return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZMm,_that.displacementHorizontalMm,_that.cumulativeDisplacementMm,_that.fixQuality);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$GnssPayloadImpl implements _GnssPayload {
-  const _$GnssPayloadImpl(
-      {required this.displacementXMm,
-      required this.displacementYMm,
-      required this.displacementZMm,
-      required this.displacementHorizontalMm,
-      required this.cumulativeDisplacementMm,
-      required this.fixQuality});
 
-  factory _$GnssPayloadImpl.fromJson(Map<String, dynamic> json) =>
-      _$$GnssPayloadImplFromJson(json);
+class _GnssPayload implements GnssPayload {
+  const _GnssPayload({required this.displacementXMm, required this.displacementYMm, required this.displacementZMm, required this.displacementHorizontalMm, required this.cumulativeDisplacementMm, required this.fixQuality});
+  factory _GnssPayload.fromJson(Map<String, dynamic> json) => _$GnssPayloadFromJson(json);
 
-  @override
-  final double displacementXMm;
-  @override
-  final double displacementYMm;
-  @override
-  final double displacementZMm;
-  @override
-  final double displacementHorizontalMm;
-  @override
-  final double cumulativeDisplacementMm;
-  @override
-  final int fixQuality;
+@override final  double displacementXMm;
+@override final  double displacementYMm;
+@override final  double displacementZMm;
+@override final  double displacementHorizontalMm;
+@override final  double cumulativeDisplacementMm;
+@override final  int fixQuality;
 
-  @override
-  String toString() {
-    return 'GnssPayload(displacementXMm: $displacementXMm, displacementYMm: $displacementYMm, displacementZMm: $displacementZMm, displacementHorizontalMm: $displacementHorizontalMm, cumulativeDisplacementMm: $cumulativeDisplacementMm, fixQuality: $fixQuality)';
-  }
+/// Create a copy of GnssPayload
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$GnssPayloadCopyWith<_GnssPayload> get copyWith => __$GnssPayloadCopyWithImpl<_GnssPayload>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$GnssPayloadImpl &&
-            (identical(other.displacementXMm, displacementXMm) ||
-                other.displacementXMm == displacementXMm) &&
-            (identical(other.displacementYMm, displacementYMm) ||
-                other.displacementYMm == displacementYMm) &&
-            (identical(other.displacementZMm, displacementZMm) ||
-                other.displacementZMm == displacementZMm) &&
-            (identical(
-                    other.displacementHorizontalMm, displacementHorizontalMm) ||
-                other.displacementHorizontalMm == displacementHorizontalMm) &&
-            (identical(
-                    other.cumulativeDisplacementMm, cumulativeDisplacementMm) ||
-                other.cumulativeDisplacementMm == cumulativeDisplacementMm) &&
-            (identical(other.fixQuality, fixQuality) ||
-                other.fixQuality == fixQuality));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      displacementXMm,
-      displacementYMm,
-      displacementZMm,
-      displacementHorizontalMm,
-      cumulativeDisplacementMm,
-      fixQuality);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$GnssPayloadImplCopyWith<_$GnssPayloadImpl> get copyWith =>
-      __$$GnssPayloadImplCopyWithImpl<_$GnssPayloadImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GnssPayloadImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$GnssPayloadToJson(this, );
 }
 
-abstract class _GnssPayload implements GnssPayload {
-  const factory _GnssPayload(
-      {required final double displacementXMm,
-      required final double displacementYMm,
-      required final double displacementZMm,
-      required final double displacementHorizontalMm,
-      required final double cumulativeDisplacementMm,
-      required final int fixQuality}) = _$GnssPayloadImpl;
-
-  factory _GnssPayload.fromJson(Map<String, dynamic> json) =
-      _$GnssPayloadImpl.fromJson;
-
-  @override
-  double get displacementXMm;
-  @override
-  double get displacementYMm;
-  @override
-  double get displacementZMm;
-  @override
-  double get displacementHorizontalMm;
-  @override
-  double get cumulativeDisplacementMm;
-  @override
-  int get fixQuality;
-  @override
-  @JsonKey(ignore: true)
-  _$$GnssPayloadImplCopyWith<_$GnssPayloadImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GnssPayload&&(identical(other.displacementXMm, displacementXMm) || other.displacementXMm == displacementXMm)&&(identical(other.displacementYMm, displacementYMm) || other.displacementYMm == displacementYMm)&&(identical(other.displacementZMm, displacementZMm) || other.displacementZMm == displacementZMm)&&(identical(other.displacementHorizontalMm, displacementHorizontalMm) || other.displacementHorizontalMm == displacementHorizontalMm)&&(identical(other.cumulativeDisplacementMm, cumulativeDisplacementMm) || other.cumulativeDisplacementMm == cumulativeDisplacementMm)&&(identical(other.fixQuality, fixQuality) || other.fixQuality == fixQuality));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,displacementXMm,displacementYMm,displacementZMm,displacementHorizontalMm,cumulativeDisplacementMm,fixQuality);
+
+@override
+String toString() {
+  return 'GnssPayload(displacementXMm: $displacementXMm, displacementYMm: $displacementYMm, displacementZMm: $displacementZMm, displacementHorizontalMm: $displacementHorizontalMm, cumulativeDisplacementMm: $cumulativeDisplacementMm, fixQuality: $fixQuality)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$GnssPayloadCopyWith<$Res> implements $GnssPayloadCopyWith<$Res> {
+  factory _$GnssPayloadCopyWith(_GnssPayload value, $Res Function(_GnssPayload) _then) = __$GnssPayloadCopyWithImpl;
+@override @useResult
+$Res call({
+ double displacementXMm, double displacementYMm, double displacementZMm, double displacementHorizontalMm, double cumulativeDisplacementMm, int fixQuality
+});
+
+
+
+
+}
+/// @nodoc
+class __$GnssPayloadCopyWithImpl<$Res>
+    implements _$GnssPayloadCopyWith<$Res> {
+  __$GnssPayloadCopyWithImpl(this._self, this._then);
+
+  final _GnssPayload _self;
+  final $Res Function(_GnssPayload) _then;
+
+/// Create a copy of GnssPayload
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? displacementXMm = null,Object? displacementYMm = null,Object? displacementZMm = null,Object? displacementHorizontalMm = null,Object? cumulativeDisplacementMm = null,Object? fixQuality = null,}) {
+  return _then(_GnssPayload(
+displacementXMm: null == displacementXMm ? _self.displacementXMm : displacementXMm // ignore: cast_nullable_to_non_nullable
+as double,displacementYMm: null == displacementYMm ? _self.displacementYMm : displacementYMm // ignore: cast_nullable_to_non_nullable
+as double,displacementZMm: null == displacementZMm ? _self.displacementZMm : displacementZMm // ignore: cast_nullable_to_non_nullable
+as double,displacementHorizontalMm: null == displacementHorizontalMm ? _self.displacementHorizontalMm : displacementHorizontalMm // ignore: cast_nullable_to_non_nullable
+as double,cumulativeDisplacementMm: null == cumulativeDisplacementMm ? _self.cumulativeDisplacementMm : cumulativeDisplacementMm // ignore: cast_nullable_to_non_nullable
+as double,fixQuality: null == fixQuality ? _self.fixQuality : fixQuality // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+// dart format on

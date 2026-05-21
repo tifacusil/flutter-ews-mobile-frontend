@@ -4,7 +4,7 @@ part 'soil_pressure_payload.freezed.dart';
 part 'soil_pressure_payload.g.dart';
 
 @freezed
-class SoilPressurePayload with _$SoilPressurePayload {
+abstract class SoilPressurePayload with _$SoilPressurePayload {
   const factory SoilPressurePayload({
     required double pressureKpa,
     double? temperatureCelsius,

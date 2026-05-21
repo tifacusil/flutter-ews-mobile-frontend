@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 import 'core/theme/app_theme.dart';
 import 'router.dart';
@@ -17,10 +18,10 @@ class EwsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return ShadApp.router(
       title: 'EWS Landslide Monitor',
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
+      theme: AppTheme.shad,
+      darkTheme: AppTheme.shadDark,
       routerConfig: appRouter,
     );
   }

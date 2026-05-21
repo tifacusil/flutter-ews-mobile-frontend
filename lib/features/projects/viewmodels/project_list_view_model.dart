@@ -1,13 +1,16 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// TODO: define a Project model and ProjectRepository
-// TODO: register projectListProvider once dependencies are wired
+// TODO: define a Project model and import projectRepositoryProvider
 
-class ProjectListViewModel extends StateNotifier<AsyncValue<List<dynamic>>> {
-  ProjectListViewModel() : super(const AsyncValue.loading());
+part 'project_list_view_model.g.dart';
 
-  Future<void> load() async {
-    // TODO: fetch project list from ProjectRepository
-    state = const AsyncValue.data([]);
+@riverpod
+class ProjectListViewModel extends _$ProjectListViewModel {
+  @override
+  Future<List<dynamic>> build() async {
+    // TODO: return await ref.read(projectRepositoryProvider).getProjects();
+    return [];
   }
+
+  Future<void> reload() => ref.refresh(projectListViewModelProvider.future);
 }

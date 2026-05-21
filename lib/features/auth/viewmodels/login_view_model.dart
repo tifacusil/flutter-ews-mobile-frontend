@@ -1,36 +1,39 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../core/repositories/auth_repository.dart';
+part 'login_view_model.g.dart';
 
 class LoginState {
   const LoginState({
     this.isLoading = false,
+    this.isSuccess = false,
     this.error,
   });
 
   final bool isLoading;
+  final bool isSuccess;
   final String? error;
 
-  LoginState copyWith({bool? isLoading, String? error}) => LoginState(
+  LoginState copyWith({bool? isLoading, bool? isSuccess, String? error}) =>
+      LoginState(
         isLoading: isLoading ?? this.isLoading,
+        isSuccess: isSuccess ?? this.isSuccess,
         error: error,
       );
 }
 
-class LoginViewModel extends StateNotifier<LoginState> {
-  LoginViewModel(this._authRepository) : super(const LoginState());
-
-  final AuthRepository _authRepository;
+@riverpod
+class LoginViewModel extends _$LoginViewModel {
+  @override
+  LoginState build() => const LoginState();
 
   Future<void> login(String username, String password) async {
     state = state.copyWith(isLoading: true, error: null);
-    try {
-      await _authRepository.login(username, password);
-      state = state.copyWith(isLoading: false);
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+    // Mock: simulate network latency
+    await Future.delayed(const Duration(milliseconds: 800));
+    if (username.trim().isEmpty || password.isEmpty) {
+      state = state.copyWith(isLoading: false, error: 'Invalid credentials.');
+      return;
     }
+    state = state.copyWith(isLoading: false, isSuccess: true);
   }
 }
-
-// TODO: register provider after implementing AuthRepository

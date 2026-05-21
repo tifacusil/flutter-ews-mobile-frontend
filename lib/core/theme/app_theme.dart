@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 
 class AppTheme {
   const AppTheme._();
 
-  static ThemeData get light => ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
-        useMaterial3: true,
-        // TODO: add typography, card themes, app bar theme
+  // Slate gives neutral UI so alert colours (blue/orange/red) stand out clearly.
+  static ShadThemeData get shad => ShadThemeData(
+        brightness: Brightness.light,
+        colorScheme: const ShadSlateColorScheme.light(),
       );
 
-  static ThemeData get dark => ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.primary,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-        // TODO: dark mode refinements
+  static ShadThemeData get shadDark => ShadThemeData(
+        brightness: Brightness.dark,
+        colorScheme: const ShadSlateColorScheme.dark(),
       );
 }

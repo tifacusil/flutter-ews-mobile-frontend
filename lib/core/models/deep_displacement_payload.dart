@@ -4,7 +4,7 @@ part 'deep_displacement_payload.freezed.dart';
 part 'deep_displacement_payload.g.dart';
 
 @freezed
-class DeepDisplacementPayload with _$DeepDisplacementPayload {
+abstract class DeepDisplacementPayload with _$DeepDisplacementPayload {
   const factory DeepDisplacementPayload({
     required double depthM,
     required double tiltXMm,

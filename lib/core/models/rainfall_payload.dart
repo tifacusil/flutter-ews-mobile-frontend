@@ -4,7 +4,7 @@ part 'rainfall_payload.freezed.dart';
 part 'rainfall_payload.g.dart';
 
 @freezed
-class RainfallPayload with _$RainfallPayload {
+abstract class RainfallPayload with _$RainfallPayload {
   const factory RainfallPayload({
     required double rainfallMm,
     required double cumulativeRainfallMm,

@@ -4,7 +4,7 @@ part 'gnss_payload.freezed.dart';
 part 'gnss_payload.g.dart';
 
 @freezed
-class GnssPayload with _$GnssPayload {
+abstract class GnssPayload with _$GnssPayload {
   const factory GnssPayload({
     required double displacementXMm,
     required double displacementYMm,

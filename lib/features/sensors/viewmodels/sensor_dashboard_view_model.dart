@@ -1,10 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/sensor_envelope.dart';
-import '../../../core/repositories/sensor_repository.dart';
 import '../../../core/models/date_range.dart';
+
+// TODO: import sensorRepositoryProvider once SensorRepository is implemented
+
+part 'sensor_dashboard_view_model.g.dart';
 
 class SensorDashboardState {
   const SensorDashboardState({
@@ -33,44 +36,34 @@ class SensorDashboardState {
       );
 }
 
-class SensorDashboardViewModel
-    extends StateNotifier<SensorDashboardState> {
-  SensorDashboardViewModel({
-    required this.projectId,
-    required this.sensorId,
-    required this._repository,
-  }) : super(const SensorDashboardState());
-
-  final String projectId;
-  final String sensorId;
-  final SensorRepository _repository;
-
+@riverpod
+class SensorDashboardViewModel extends _$SensorDashboardViewModel {
   StreamSubscription<SensorEnvelope>? _sub;
 
+  @override
+  SensorDashboardState build({
+    required String projectId,
+    required String sensorId,
+  }) {
+    ref.onDispose(() => _sub?.cancel());
+    return const SensorDashboardState();
+  }
+
   void startWatching() {
-    _sub = _repository.watchSensor(projectId, sensorId).listen(
-      (envelope) => state = state.copyWith(latest: envelope),
-      onError: (Object e) =>
-          state = state.copyWith(error: e.toString()),
-    );
+    // TODO: _sub = ref.read(sensorRepositoryProvider).watchSensor(projectId, sensorId).listen(
+    //   (envelope) => state = state.copyWith(latest: envelope),
+    //   onError: (Object e) => state = state.copyWith(error: e.toString()),
+    // );
   }
 
   Future<void> loadHistory(DateRange range) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final history =
-          await _repository.getHistory(projectId, sensorId, range);
-      state = state.copyWith(history: history, isLoading: false);
+      // TODO: final history = await ref.read(sensorRepositoryProvider).getHistory(projectId, sensorId, range);
+      // state = state.copyWith(history: history, isLoading: false);
+      state = state.copyWith(isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
-
-  @override
-  void dispose() {
-    _sub?.cancel();
-    super.dispose();
-  }
 }
-
-// TODO: register sensorDashboardProvider family after wiring SensorRepository

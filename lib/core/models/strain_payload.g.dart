@@ -6,13 +6,13 @@ part of 'strain_payload.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$StrainPayloadImpl _$$StrainPayloadImplFromJson(Map<String, dynamic> json) =>
-    _$StrainPayloadImpl(
+_StrainPayload _$StrainPayloadFromJson(Map<String, dynamic> json) =>
+    _StrainPayload(
       strainMicrostrain: (json['strainMicrostrain'] as num).toDouble(),
       temperatureCelsius: (json['temperatureCelsius'] as num?)?.toDouble(),
     );
 
-Map<String, dynamic> _$$StrainPayloadImplToJson(_$StrainPayloadImpl instance) =>
+Map<String, dynamic> _$StrainPayloadToJson(_StrainPayload instance) =>
     <String, dynamic>{
       'strainMicrostrain': instance.strainMicrostrain,
       'temperatureCelsius': instance.temperatureCelsius,

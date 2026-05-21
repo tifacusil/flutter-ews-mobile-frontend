@@ -4,7 +4,7 @@ part 'sensor_envelope.freezed.dart';
 part 'sensor_envelope.g.dart';
 
 @freezed
-class SensorEnvelope with _$SensorEnvelope {
+abstract class SensorEnvelope with _$SensorEnvelope {
   const factory SensorEnvelope({
     required String schemaVersion,
     required String messageId,

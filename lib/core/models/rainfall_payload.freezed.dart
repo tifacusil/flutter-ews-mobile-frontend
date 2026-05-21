@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,188 +9,275 @@ part of 'rainfall_payload.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-RainfallPayload _$RainfallPayloadFromJson(Map<String, dynamic> json) {
-  return _RainfallPayload.fromJson(json);
-}
 
 /// @nodoc
 mixin _$RainfallPayload {
-  double get rainfallMm => throw _privateConstructorUsedError;
-  double get cumulativeRainfallMm => throw _privateConstructorUsedError;
-  int get intervalMinutes => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $RainfallPayloadCopyWith<RainfallPayload> get copyWith =>
-      throw _privateConstructorUsedError;
+ double get rainfallMm; double get cumulativeRainfallMm; int get intervalMinutes;
+/// Create a copy of RainfallPayload
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RainfallPayloadCopyWith<RainfallPayload> get copyWith => _$RainfallPayloadCopyWithImpl<RainfallPayload>(this as RainfallPayload, _$identity);
+
+  /// Serializes this RainfallPayload to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RainfallPayload&&(identical(other.rainfallMm, rainfallMm) || other.rainfallMm == rainfallMm)&&(identical(other.cumulativeRainfallMm, cumulativeRainfallMm) || other.cumulativeRainfallMm == cumulativeRainfallMm)&&(identical(other.intervalMinutes, intervalMinutes) || other.intervalMinutes == intervalMinutes));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,rainfallMm,cumulativeRainfallMm,intervalMinutes);
+
+@override
+String toString() {
+  return 'RainfallPayload(rainfallMm: $rainfallMm, cumulativeRainfallMm: $cumulativeRainfallMm, intervalMinutes: $intervalMinutes)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $RainfallPayloadCopyWith<$Res> {
-  factory $RainfallPayloadCopyWith(
-          RainfallPayload value, $Res Function(RainfallPayload) then) =
-      _$RainfallPayloadCopyWithImpl<$Res, RainfallPayload>;
-  @useResult
-  $Res call(
-      {double rainfallMm, double cumulativeRainfallMm, int intervalMinutes});
-}
+abstract mixin class $RainfallPayloadCopyWith<$Res>  {
+  factory $RainfallPayloadCopyWith(RainfallPayload value, $Res Function(RainfallPayload) _then) = _$RainfallPayloadCopyWithImpl;
+@useResult
+$Res call({
+ double rainfallMm, double cumulativeRainfallMm, int intervalMinutes
+});
 
+
+
+
+}
 /// @nodoc
-class _$RainfallPayloadCopyWithImpl<$Res, $Val extends RainfallPayload>
+class _$RainfallPayloadCopyWithImpl<$Res>
     implements $RainfallPayloadCopyWith<$Res> {
-  _$RainfallPayloadCopyWithImpl(this._value, this._then);
+  _$RainfallPayloadCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final RainfallPayload _self;
+  final $Res Function(RainfallPayload) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? rainfallMm = null,
-    Object? cumulativeRainfallMm = null,
-    Object? intervalMinutes = null,
-  }) {
-    return _then(_value.copyWith(
-      rainfallMm: null == rainfallMm
-          ? _value.rainfallMm
-          : rainfallMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      cumulativeRainfallMm: null == cumulativeRainfallMm
-          ? _value.cumulativeRainfallMm
-          : cumulativeRainfallMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      intervalMinutes: null == intervalMinutes
-          ? _value.intervalMinutes
-          : intervalMinutes // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
-  }
+/// Create a copy of RainfallPayload
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? rainfallMm = null,Object? cumulativeRainfallMm = null,Object? intervalMinutes = null,}) {
+  return _then(_self.copyWith(
+rainfallMm: null == rainfallMm ? _self.rainfallMm : rainfallMm // ignore: cast_nullable_to_non_nullable
+as double,cumulativeRainfallMm: null == cumulativeRainfallMm ? _self.cumulativeRainfallMm : cumulativeRainfallMm // ignore: cast_nullable_to_non_nullable
+as double,intervalMinutes: null == intervalMinutes ? _self.intervalMinutes : intervalMinutes // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
 }
 
-/// @nodoc
-abstract class _$$RainfallPayloadImplCopyWith<$Res>
-    implements $RainfallPayloadCopyWith<$Res> {
-  factory _$$RainfallPayloadImplCopyWith(_$RainfallPayloadImpl value,
-          $Res Function(_$RainfallPayloadImpl) then) =
-      __$$RainfallPayloadImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {double rainfallMm, double cumulativeRainfallMm, int intervalMinutes});
 }
 
-/// @nodoc
-class __$$RainfallPayloadImplCopyWithImpl<$Res>
-    extends _$RainfallPayloadCopyWithImpl<$Res, _$RainfallPayloadImpl>
-    implements _$$RainfallPayloadImplCopyWith<$Res> {
-  __$$RainfallPayloadImplCopyWithImpl(
-      _$RainfallPayloadImpl _value, $Res Function(_$RainfallPayloadImpl) _then)
-      : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? rainfallMm = null,
-    Object? cumulativeRainfallMm = null,
-    Object? intervalMinutes = null,
-  }) {
-    return _then(_$RainfallPayloadImpl(
-      rainfallMm: null == rainfallMm
-          ? _value.rainfallMm
-          : rainfallMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      cumulativeRainfallMm: null == cumulativeRainfallMm
-          ? _value.cumulativeRainfallMm
-          : cumulativeRainfallMm // ignore: cast_nullable_to_non_nullable
-              as double,
-      intervalMinutes: null == intervalMinutes
-          ? _value.intervalMinutes
-          : intervalMinutes // ignore: cast_nullable_to_non_nullable
-              as int,
-    ));
-  }
+/// Adds pattern-matching-related methods to [RainfallPayload].
+extension RainfallPayloadPatterns on RainfallPayload {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _RainfallPayload value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _RainfallPayload() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _RainfallPayload value)  $default,){
+final _that = this;
+switch (_that) {
+case _RainfallPayload():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _RainfallPayload value)?  $default,){
+final _that = this;
+switch (_that) {
+case _RainfallPayload() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double rainfallMm,  double cumulativeRainfallMm,  int intervalMinutes)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _RainfallPayload() when $default != null:
+return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinutes);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double rainfallMm,  double cumulativeRainfallMm,  int intervalMinutes)  $default,) {final _that = this;
+switch (_that) {
+case _RainfallPayload():
+return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinutes);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double rainfallMm,  double cumulativeRainfallMm,  int intervalMinutes)?  $default,) {final _that = this;
+switch (_that) {
+case _RainfallPayload() when $default != null:
+return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinutes);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$RainfallPayloadImpl implements _RainfallPayload {
-  const _$RainfallPayloadImpl(
-      {required this.rainfallMm,
-      required this.cumulativeRainfallMm,
-      required this.intervalMinutes});
 
-  factory _$RainfallPayloadImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RainfallPayloadImplFromJson(json);
+class _RainfallPayload implements RainfallPayload {
+  const _RainfallPayload({required this.rainfallMm, required this.cumulativeRainfallMm, required this.intervalMinutes});
+  factory _RainfallPayload.fromJson(Map<String, dynamic> json) => _$RainfallPayloadFromJson(json);
 
-  @override
-  final double rainfallMm;
-  @override
-  final double cumulativeRainfallMm;
-  @override
-  final int intervalMinutes;
+@override final  double rainfallMm;
+@override final  double cumulativeRainfallMm;
+@override final  int intervalMinutes;
 
-  @override
-  String toString() {
-    return 'RainfallPayload(rainfallMm: $rainfallMm, cumulativeRainfallMm: $cumulativeRainfallMm, intervalMinutes: $intervalMinutes)';
-  }
+/// Create a copy of RainfallPayload
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$RainfallPayloadCopyWith<_RainfallPayload> get copyWith => __$RainfallPayloadCopyWithImpl<_RainfallPayload>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$RainfallPayloadImpl &&
-            (identical(other.rainfallMm, rainfallMm) ||
-                other.rainfallMm == rainfallMm) &&
-            (identical(other.cumulativeRainfallMm, cumulativeRainfallMm) ||
-                other.cumulativeRainfallMm == cumulativeRainfallMm) &&
-            (identical(other.intervalMinutes, intervalMinutes) ||
-                other.intervalMinutes == intervalMinutes));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, rainfallMm, cumulativeRainfallMm, intervalMinutes);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$RainfallPayloadImplCopyWith<_$RainfallPayloadImpl> get copyWith =>
-      __$$RainfallPayloadImplCopyWithImpl<_$RainfallPayloadImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$RainfallPayloadImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$RainfallPayloadToJson(this, );
 }
 
-abstract class _RainfallPayload implements RainfallPayload {
-  const factory _RainfallPayload(
-      {required final double rainfallMm,
-      required final double cumulativeRainfallMm,
-      required final int intervalMinutes}) = _$RainfallPayloadImpl;
-
-  factory _RainfallPayload.fromJson(Map<String, dynamic> json) =
-      _$RainfallPayloadImpl.fromJson;
-
-  @override
-  double get rainfallMm;
-  @override
-  double get cumulativeRainfallMm;
-  @override
-  int get intervalMinutes;
-  @override
-  @JsonKey(ignore: true)
-  _$$RainfallPayloadImplCopyWith<_$RainfallPayloadImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RainfallPayload&&(identical(other.rainfallMm, rainfallMm) || other.rainfallMm == rainfallMm)&&(identical(other.cumulativeRainfallMm, cumulativeRainfallMm) || other.cumulativeRainfallMm == cumulativeRainfallMm)&&(identical(other.intervalMinutes, intervalMinutes) || other.intervalMinutes == intervalMinutes));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,rainfallMm,cumulativeRainfallMm,intervalMinutes);
+
+@override
+String toString() {
+  return 'RainfallPayload(rainfallMm: $rainfallMm, cumulativeRainfallMm: $cumulativeRainfallMm, intervalMinutes: $intervalMinutes)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$RainfallPayloadCopyWith<$Res> implements $RainfallPayloadCopyWith<$Res> {
+  factory _$RainfallPayloadCopyWith(_RainfallPayload value, $Res Function(_RainfallPayload) _then) = __$RainfallPayloadCopyWithImpl;
+@override @useResult
+$Res call({
+ double rainfallMm, double cumulativeRainfallMm, int intervalMinutes
+});
+
+
+
+
+}
+/// @nodoc
+class __$RainfallPayloadCopyWithImpl<$Res>
+    implements _$RainfallPayloadCopyWith<$Res> {
+  __$RainfallPayloadCopyWithImpl(this._self, this._then);
+
+  final _RainfallPayload _self;
+  final $Res Function(_RainfallPayload) _then;
+
+/// Create a copy of RainfallPayload
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? rainfallMm = null,Object? cumulativeRainfallMm = null,Object? intervalMinutes = null,}) {
+  return _then(_RainfallPayload(
+rainfallMm: null == rainfallMm ? _self.rainfallMm : rainfallMm // ignore: cast_nullable_to_non_nullable
+as double,cumulativeRainfallMm: null == cumulativeRainfallMm ? _self.cumulativeRainfallMm : cumulativeRainfallMm // ignore: cast_nullable_to_non_nullable
+as double,intervalMinutes: null == intervalMinutes ? _self.intervalMinutes : intervalMinutes // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+// dart format on

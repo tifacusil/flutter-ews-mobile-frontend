@@ -1,9 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/alert.dart';
-import '../../../core/repositories/alert_repository.dart';
+
+// TODO: import alertRepositoryProvider once AlertRepository is implemented
+
+part 'alert_view_model.g.dart';
 
 class AlertState {
   const AlertState({
@@ -32,41 +35,31 @@ class AlertState {
       );
 }
 
-class AlertViewModel extends StateNotifier<AlertState> {
-  AlertViewModel({
-    required this.projectId,
-    required this._repository,
-  }) : super(const AlertState());
-
-  final String projectId;
-  final AlertRepository _repository;
-
+@riverpod
+class AlertViewModel extends _$AlertViewModel {
   StreamSubscription<Alert>? _sub;
 
+  @override
+  AlertState build({required String projectId}) {
+    ref.onDispose(() => _sub?.cancel());
+    return const AlertState();
+  }
+
   void startWatching() {
-    _sub = _repository.watchAlerts(projectId).listen(
-      (alert) => state = state.copyWith(
-        activeAlerts: [...state.activeAlerts, alert],
-      ),
-      onError: (Object e) => state = state.copyWith(error: e.toString()),
-    );
+    // TODO: _sub = ref.read(alertRepositoryProvider).watchAlerts(projectId).listen(
+    //   (alert) => state = state.copyWith(activeAlerts: [...state.activeAlerts, alert]),
+    //   onError: (Object e) => state = state.copyWith(error: e.toString()),
+    // );
   }
 
   Future<void> loadHistory() async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final history = await _repository.getAlertHistory(projectId);
-      state = state.copyWith(history: history, isLoading: false);
+      // TODO: final history = await ref.read(alertRepositoryProvider).getAlertHistory(projectId);
+      // state = state.copyWith(history: history, isLoading: false);
+      state = state.copyWith(isLoading: false);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
   }
-
-  @override
-  void dispose() {
-    _sub?.cancel();
-    super.dispose();
-  }
 }
-
-// TODO: register alertProvider family after wiring AlertRepository

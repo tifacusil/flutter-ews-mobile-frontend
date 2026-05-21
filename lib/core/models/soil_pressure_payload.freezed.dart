@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,165 +9,272 @@ part of 'soil_pressure_payload.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-SoilPressurePayload _$SoilPressurePayloadFromJson(Map<String, dynamic> json) {
-  return _SoilPressurePayload.fromJson(json);
-}
 
 /// @nodoc
 mixin _$SoilPressurePayload {
-  double get pressureKpa => throw _privateConstructorUsedError;
-  double? get temperatureCelsius => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $SoilPressurePayloadCopyWith<SoilPressurePayload> get copyWith =>
-      throw _privateConstructorUsedError;
+ double get pressureKpa; double? get temperatureCelsius;
+/// Create a copy of SoilPressurePayload
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$SoilPressurePayloadCopyWith<SoilPressurePayload> get copyWith => _$SoilPressurePayloadCopyWithImpl<SoilPressurePayload>(this as SoilPressurePayload, _$identity);
+
+  /// Serializes this SoilPressurePayload to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SoilPressurePayload&&(identical(other.pressureKpa, pressureKpa) || other.pressureKpa == pressureKpa)&&(identical(other.temperatureCelsius, temperatureCelsius) || other.temperatureCelsius == temperatureCelsius));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,pressureKpa,temperatureCelsius);
+
+@override
+String toString() {
+  return 'SoilPressurePayload(pressureKpa: $pressureKpa, temperatureCelsius: $temperatureCelsius)';
+}
+
+
 }
 
 /// @nodoc
-abstract class $SoilPressurePayloadCopyWith<$Res> {
-  factory $SoilPressurePayloadCopyWith(
-          SoilPressurePayload value, $Res Function(SoilPressurePayload) then) =
-      _$SoilPressurePayloadCopyWithImpl<$Res, SoilPressurePayload>;
-  @useResult
-  $Res call({double pressureKpa, double? temperatureCelsius});
-}
+abstract mixin class $SoilPressurePayloadCopyWith<$Res>  {
+  factory $SoilPressurePayloadCopyWith(SoilPressurePayload value, $Res Function(SoilPressurePayload) _then) = _$SoilPressurePayloadCopyWithImpl;
+@useResult
+$Res call({
+ double pressureKpa, double? temperatureCelsius
+});
 
+
+
+
+}
 /// @nodoc
-class _$SoilPressurePayloadCopyWithImpl<$Res, $Val extends SoilPressurePayload>
+class _$SoilPressurePayloadCopyWithImpl<$Res>
     implements $SoilPressurePayloadCopyWith<$Res> {
-  _$SoilPressurePayloadCopyWithImpl(this._value, this._then);
+  _$SoilPressurePayloadCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final SoilPressurePayload _self;
+  final $Res Function(SoilPressurePayload) _then;
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? pressureKpa = null,
-    Object? temperatureCelsius = freezed,
-  }) {
-    return _then(_value.copyWith(
-      pressureKpa: null == pressureKpa
-          ? _value.pressureKpa
-          : pressureKpa // ignore: cast_nullable_to_non_nullable
-              as double,
-      temperatureCelsius: freezed == temperatureCelsius
-          ? _value.temperatureCelsius
-          : temperatureCelsius // ignore: cast_nullable_to_non_nullable
-              as double?,
-    ) as $Val);
-  }
+/// Create a copy of SoilPressurePayload
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? pressureKpa = null,Object? temperatureCelsius = freezed,}) {
+  return _then(_self.copyWith(
+pressureKpa: null == pressureKpa ? _self.pressureKpa : pressureKpa // ignore: cast_nullable_to_non_nullable
+as double,temperatureCelsius: freezed == temperatureCelsius ? _self.temperatureCelsius : temperatureCelsius // ignore: cast_nullable_to_non_nullable
+as double?,
+  ));
 }
 
-/// @nodoc
-abstract class _$$SoilPressurePayloadImplCopyWith<$Res>
-    implements $SoilPressurePayloadCopyWith<$Res> {
-  factory _$$SoilPressurePayloadImplCopyWith(_$SoilPressurePayloadImpl value,
-          $Res Function(_$SoilPressurePayloadImpl) then) =
-      __$$SoilPressurePayloadImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({double pressureKpa, double? temperatureCelsius});
 }
 
-/// @nodoc
-class __$$SoilPressurePayloadImplCopyWithImpl<$Res>
-    extends _$SoilPressurePayloadCopyWithImpl<$Res, _$SoilPressurePayloadImpl>
-    implements _$$SoilPressurePayloadImplCopyWith<$Res> {
-  __$$SoilPressurePayloadImplCopyWithImpl(_$SoilPressurePayloadImpl _value,
-      $Res Function(_$SoilPressurePayloadImpl) _then)
-      : super(_value, _then);
 
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? pressureKpa = null,
-    Object? temperatureCelsius = freezed,
-  }) {
-    return _then(_$SoilPressurePayloadImpl(
-      pressureKpa: null == pressureKpa
-          ? _value.pressureKpa
-          : pressureKpa // ignore: cast_nullable_to_non_nullable
-              as double,
-      temperatureCelsius: freezed == temperatureCelsius
-          ? _value.temperatureCelsius
-          : temperatureCelsius // ignore: cast_nullable_to_non_nullable
-              as double?,
-    ));
-  }
+/// Adds pattern-matching-related methods to [SoilPressurePayload].
+extension SoilPressurePayloadPatterns on SoilPressurePayload {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SoilPressurePayload value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _SoilPressurePayload() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SoilPressurePayload value)  $default,){
+final _that = this;
+switch (_that) {
+case _SoilPressurePayload():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SoilPressurePayload value)?  $default,){
+final _that = this;
+switch (_that) {
+case _SoilPressurePayload() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double pressureKpa,  double? temperatureCelsius)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _SoilPressurePayload() when $default != null:
+return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double pressureKpa,  double? temperatureCelsius)  $default,) {final _that = this;
+switch (_that) {
+case _SoilPressurePayload():
+return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double pressureKpa,  double? temperatureCelsius)?  $default,) {final _that = this;
+switch (_that) {
+case _SoilPressurePayload() when $default != null:
+return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
+  return null;
+
+}
+}
+
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$SoilPressurePayloadImpl implements _SoilPressurePayload {
-  const _$SoilPressurePayloadImpl(
-      {required this.pressureKpa, this.temperatureCelsius});
 
-  factory _$SoilPressurePayloadImpl.fromJson(Map<String, dynamic> json) =>
-      _$$SoilPressurePayloadImplFromJson(json);
+class _SoilPressurePayload implements SoilPressurePayload {
+  const _SoilPressurePayload({required this.pressureKpa, this.temperatureCelsius});
+  factory _SoilPressurePayload.fromJson(Map<String, dynamic> json) => _$SoilPressurePayloadFromJson(json);
 
-  @override
-  final double pressureKpa;
-  @override
-  final double? temperatureCelsius;
+@override final  double pressureKpa;
+@override final  double? temperatureCelsius;
 
-  @override
-  String toString() {
-    return 'SoilPressurePayload(pressureKpa: $pressureKpa, temperatureCelsius: $temperatureCelsius)';
-  }
+/// Create a copy of SoilPressurePayload
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SoilPressurePayloadCopyWith<_SoilPressurePayload> get copyWith => __$SoilPressurePayloadCopyWithImpl<_SoilPressurePayload>(this, _$identity);
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SoilPressurePayloadImpl &&
-            (identical(other.pressureKpa, pressureKpa) ||
-                other.pressureKpa == pressureKpa) &&
-            (identical(other.temperatureCelsius, temperatureCelsius) ||
-                other.temperatureCelsius == temperatureCelsius));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(runtimeType, pressureKpa, temperatureCelsius);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SoilPressurePayloadImplCopyWith<_$SoilPressurePayloadImpl> get copyWith =>
-      __$$SoilPressurePayloadImplCopyWithImpl<_$SoilPressurePayloadImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$SoilPressurePayloadImplToJson(
-      this,
-    );
-  }
+@override
+Map<String, dynamic> toJson() {
+  return _$SoilPressurePayloadToJson(this, );
 }
 
-abstract class _SoilPressurePayload implements SoilPressurePayload {
-  const factory _SoilPressurePayload(
-      {required final double pressureKpa,
-      final double? temperatureCelsius}) = _$SoilPressurePayloadImpl;
-
-  factory _SoilPressurePayload.fromJson(Map<String, dynamic> json) =
-      _$SoilPressurePayloadImpl.fromJson;
-
-  @override
-  double get pressureKpa;
-  @override
-  double? get temperatureCelsius;
-  @override
-  @JsonKey(ignore: true)
-  _$$SoilPressurePayloadImplCopyWith<_$SoilPressurePayloadImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SoilPressurePayload&&(identical(other.pressureKpa, pressureKpa) || other.pressureKpa == pressureKpa)&&(identical(other.temperatureCelsius, temperatureCelsius) || other.temperatureCelsius == temperatureCelsius));
 }
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,pressureKpa,temperatureCelsius);
+
+@override
+String toString() {
+  return 'SoilPressurePayload(pressureKpa: $pressureKpa, temperatureCelsius: $temperatureCelsius)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SoilPressurePayloadCopyWith<$Res> implements $SoilPressurePayloadCopyWith<$Res> {
+  factory _$SoilPressurePayloadCopyWith(_SoilPressurePayload value, $Res Function(_SoilPressurePayload) _then) = __$SoilPressurePayloadCopyWithImpl;
+@override @useResult
+$Res call({
+ double pressureKpa, double? temperatureCelsius
+});
+
+
+
+
+}
+/// @nodoc
+class __$SoilPressurePayloadCopyWithImpl<$Res>
+    implements _$SoilPressurePayloadCopyWith<$Res> {
+  __$SoilPressurePayloadCopyWithImpl(this._self, this._then);
+
+  final _SoilPressurePayload _self;
+  final $Res Function(_SoilPressurePayload) _then;
+
+/// Create a copy of SoilPressurePayload
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? pressureKpa = null,Object? temperatureCelsius = freezed,}) {
+  return _then(_SoilPressurePayload(
+pressureKpa: null == pressureKpa ? _self.pressureKpa : pressureKpa // ignore: cast_nullable_to_non_nullable
+as double,temperatureCelsius: freezed == temperatureCelsius ? _self.temperatureCelsius : temperatureCelsius // ignore: cast_nullable_to_non_nullable
+as double?,
+  ));
+}
+
+
+}
+
+// dart format on

@@ -4,7 +4,7 @@ part 'strain_payload.freezed.dart';
 part 'strain_payload.g.dart';
 
 @freezed
-class StrainPayload with _$StrainPayload {
+abstract class StrainPayload with _$StrainPayload {
   const factory StrainPayload({
     required double strainMicrostrain,
     double? temperatureCelsius,
