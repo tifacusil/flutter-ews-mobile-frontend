@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StrainPayload {
 
- double get strainMicrostrain; double? get temperatureCelsius;
+@JsonKey(name: 'strain_microstrain') double get strainMicrostrain;@JsonKey(name: 'temperature_celsius') double? get temperatureCelsius;
 /// Create a copy of StrainPayload
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $StrainPayloadCopyWith<$Res>  {
   factory $StrainPayloadCopyWith(StrainPayload value, $Res Function(StrainPayload) _then) = _$StrainPayloadCopyWithImpl;
 @useResult
 $Res call({
- double strainMicrostrain, double? temperatureCelsius
+@JsonKey(name: 'strain_microstrain') double strainMicrostrain,@JsonKey(name: 'temperature_celsius') double? temperatureCelsius
 });
 
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double strainMicrostrain,  double? temperatureCelsius)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'strain_microstrain')  double strainMicrostrain, @JsonKey(name: 'temperature_celsius')  double? temperatureCelsius)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StrainPayload() when $default != null:
 return $default(_that.strainMicrostrain,_that.temperatureCelsius);case _:
@@ -175,7 +175,7 @@ return $default(_that.strainMicrostrain,_that.temperatureCelsius);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double strainMicrostrain,  double? temperatureCelsius)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'strain_microstrain')  double strainMicrostrain, @JsonKey(name: 'temperature_celsius')  double? temperatureCelsius)  $default,) {final _that = this;
 switch (_that) {
 case _StrainPayload():
 return $default(_that.strainMicrostrain,_that.temperatureCelsius);case _:
@@ -195,7 +195,7 @@ return $default(_that.strainMicrostrain,_that.temperatureCelsius);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double strainMicrostrain,  double? temperatureCelsius)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'strain_microstrain')  double strainMicrostrain, @JsonKey(name: 'temperature_celsius')  double? temperatureCelsius)?  $default,) {final _that = this;
 switch (_that) {
 case _StrainPayload() when $default != null:
 return $default(_that.strainMicrostrain,_that.temperatureCelsius);case _:
@@ -210,11 +210,11 @@ return $default(_that.strainMicrostrain,_that.temperatureCelsius);case _:
 @JsonSerializable()
 
 class _StrainPayload implements StrainPayload {
-  const _StrainPayload({required this.strainMicrostrain, this.temperatureCelsius});
+  const _StrainPayload({@JsonKey(name: 'strain_microstrain') required this.strainMicrostrain, @JsonKey(name: 'temperature_celsius') this.temperatureCelsius});
   factory _StrainPayload.fromJson(Map<String, dynamic> json) => _$StrainPayloadFromJson(json);
 
-@override final  double strainMicrostrain;
-@override final  double? temperatureCelsius;
+@override@JsonKey(name: 'strain_microstrain') final  double strainMicrostrain;
+@override@JsonKey(name: 'temperature_celsius') final  double? temperatureCelsius;
 
 /// Create a copy of StrainPayload
 /// with the given fields replaced by the non-null parameter values.
@@ -249,7 +249,7 @@ abstract mixin class _$StrainPayloadCopyWith<$Res> implements $StrainPayloadCopy
   factory _$StrainPayloadCopyWith(_StrainPayload value, $Res Function(_StrainPayload) _then) = __$StrainPayloadCopyWithImpl;
 @override @useResult
 $Res call({
- double strainMicrostrain, double? temperatureCelsius
+@JsonKey(name: 'strain_microstrain') double strainMicrostrain,@JsonKey(name: 'temperature_celsius') double? temperatureCelsius
 });
 
 

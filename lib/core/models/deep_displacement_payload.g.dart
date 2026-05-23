@@ -9,17 +9,17 @@ part of 'deep_displacement_payload.dart';
 _DeepDisplacementPayload _$DeepDisplacementPayloadFromJson(
   Map<String, dynamic> json,
 ) => _DeepDisplacementPayload(
-  depthM: (json['depthM'] as num).toDouble(),
-  tiltXMm: (json['tiltXMm'] as num).toDouble(),
-  tiltYMm: (json['tiltYMm'] as num).toDouble(),
-  cumulativeTiltMm: (json['cumulativeTiltMm'] as num).toDouble(),
+  depthM: (json['depth_m'] as num).toDouble(),
+  tiltXMm: (json['tilt_x_mm'] as num).toDouble(),
+  tiltYMm: (json['tilt_y_mm'] as num).toDouble(),
+  cumulativeTiltMm: (json['cumulative_tilt_mm'] as num).toDouble(),
 );
 
 Map<String, dynamic> _$DeepDisplacementPayloadToJson(
   _DeepDisplacementPayload instance,
 ) => <String, dynamic>{
-  'depthM': instance.depthM,
-  'tiltXMm': instance.tiltXMm,
-  'tiltYMm': instance.tiltYMm,
-  'cumulativeTiltMm': instance.cumulativeTiltMm,
+  'depth_m': instance.depthM,
+  'tilt_x_mm': instance.tiltXMm,
+  'tilt_y_mm': instance.tiltYMm,
+  'cumulative_tilt_mm': instance.cumulativeTiltMm,
 };

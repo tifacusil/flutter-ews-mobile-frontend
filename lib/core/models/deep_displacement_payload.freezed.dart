@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$DeepDisplacementPayload {
 
- double get depthM; double get tiltXMm; double get tiltYMm; double get cumulativeTiltMm;
+@JsonKey(name: 'depth_m') double get depthM;@JsonKey(name: 'tilt_x_mm') double get tiltXMm;@JsonKey(name: 'tilt_y_mm') double get tiltYMm;@JsonKey(name: 'cumulative_tilt_mm') double get cumulativeTiltMm;
 /// Create a copy of DeepDisplacementPayload
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $DeepDisplacementPayloadCopyWith<$Res>  {
   factory $DeepDisplacementPayloadCopyWith(DeepDisplacementPayload value, $Res Function(DeepDisplacementPayload) _then) = _$DeepDisplacementPayloadCopyWithImpl;
 @useResult
 $Res call({
- double depthM, double tiltXMm, double tiltYMm, double cumulativeTiltMm
+@JsonKey(name: 'depth_m') double depthM,@JsonKey(name: 'tilt_x_mm') double tiltXMm,@JsonKey(name: 'tilt_y_mm') double tiltYMm,@JsonKey(name: 'cumulative_tilt_mm') double cumulativeTiltMm
 });
 
 
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double depthM,  double tiltXMm,  double tiltYMm,  double cumulativeTiltMm)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'depth_m')  double depthM, @JsonKey(name: 'tilt_x_mm')  double tiltXMm, @JsonKey(name: 'tilt_y_mm')  double tiltYMm, @JsonKey(name: 'cumulative_tilt_mm')  double cumulativeTiltMm)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _DeepDisplacementPayload() when $default != null:
 return $default(_that.depthM,_that.tiltXMm,_that.tiltYMm,_that.cumulativeTiltMm);case _:
@@ -177,7 +177,7 @@ return $default(_that.depthM,_that.tiltXMm,_that.tiltYMm,_that.cumulativeTiltMm)
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double depthM,  double tiltXMm,  double tiltYMm,  double cumulativeTiltMm)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'depth_m')  double depthM, @JsonKey(name: 'tilt_x_mm')  double tiltXMm, @JsonKey(name: 'tilt_y_mm')  double tiltYMm, @JsonKey(name: 'cumulative_tilt_mm')  double cumulativeTiltMm)  $default,) {final _that = this;
 switch (_that) {
 case _DeepDisplacementPayload():
 return $default(_that.depthM,_that.tiltXMm,_that.tiltYMm,_that.cumulativeTiltMm);case _:
@@ -197,7 +197,7 @@ return $default(_that.depthM,_that.tiltXMm,_that.tiltYMm,_that.cumulativeTiltMm)
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double depthM,  double tiltXMm,  double tiltYMm,  double cumulativeTiltMm)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'depth_m')  double depthM, @JsonKey(name: 'tilt_x_mm')  double tiltXMm, @JsonKey(name: 'tilt_y_mm')  double tiltYMm, @JsonKey(name: 'cumulative_tilt_mm')  double cumulativeTiltMm)?  $default,) {final _that = this;
 switch (_that) {
 case _DeepDisplacementPayload() when $default != null:
 return $default(_that.depthM,_that.tiltXMm,_that.tiltYMm,_that.cumulativeTiltMm);case _:
@@ -212,13 +212,13 @@ return $default(_that.depthM,_that.tiltXMm,_that.tiltYMm,_that.cumulativeTiltMm)
 @JsonSerializable()
 
 class _DeepDisplacementPayload implements DeepDisplacementPayload {
-  const _DeepDisplacementPayload({required this.depthM, required this.tiltXMm, required this.tiltYMm, required this.cumulativeTiltMm});
+  const _DeepDisplacementPayload({@JsonKey(name: 'depth_m') required this.depthM, @JsonKey(name: 'tilt_x_mm') required this.tiltXMm, @JsonKey(name: 'tilt_y_mm') required this.tiltYMm, @JsonKey(name: 'cumulative_tilt_mm') required this.cumulativeTiltMm});
   factory _DeepDisplacementPayload.fromJson(Map<String, dynamic> json) => _$DeepDisplacementPayloadFromJson(json);
 
-@override final  double depthM;
-@override final  double tiltXMm;
-@override final  double tiltYMm;
-@override final  double cumulativeTiltMm;
+@override@JsonKey(name: 'depth_m') final  double depthM;
+@override@JsonKey(name: 'tilt_x_mm') final  double tiltXMm;
+@override@JsonKey(name: 'tilt_y_mm') final  double tiltYMm;
+@override@JsonKey(name: 'cumulative_tilt_mm') final  double cumulativeTiltMm;
 
 /// Create a copy of DeepDisplacementPayload
 /// with the given fields replaced by the non-null parameter values.
@@ -253,7 +253,7 @@ abstract mixin class _$DeepDisplacementPayloadCopyWith<$Res> implements $DeepDis
   factory _$DeepDisplacementPayloadCopyWith(_DeepDisplacementPayload value, $Res Function(_DeepDisplacementPayload) _then) = __$DeepDisplacementPayloadCopyWithImpl;
 @override @useResult
 $Res call({
- double depthM, double tiltXMm, double tiltYMm, double cumulativeTiltMm
+@JsonKey(name: 'depth_m') double depthM,@JsonKey(name: 'tilt_x_mm') double tiltXMm,@JsonKey(name: 'tilt_y_mm') double tiltYMm,@JsonKey(name: 'cumulative_tilt_mm') double cumulativeTiltMm
 });
 
 

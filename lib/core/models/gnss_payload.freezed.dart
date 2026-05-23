@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$GnssPayload {
 
- double get displacementXMm; double get displacementYMm; double get displacementZMm; double get displacementHorizontalMm; double get cumulativeDisplacementMm; int get fixQuality;
+@JsonKey(name: 'displacement_x_mm') double get displacementXMm;@JsonKey(name: 'displacement_y_mm') double get displacementYMm;@JsonKey(name: 'displacement_z_mm') double get displacementZMm;@JsonKey(name: 'displacement_horizontal_mm') double get displacementHorizontalMm;@JsonKey(name: 'cumulative_displacement_mm') double get cumulativeDisplacementMm;/// "rtk_fixed" | "float" | "dgps" | "autonomous"
+@JsonKey(name: 'fix_quality') String get fixQuality;
 /// Create a copy of GnssPayload
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +49,7 @@ abstract mixin class $GnssPayloadCopyWith<$Res>  {
   factory $GnssPayloadCopyWith(GnssPayload value, $Res Function(GnssPayload) _then) = _$GnssPayloadCopyWithImpl;
 @useResult
 $Res call({
- double displacementXMm, double displacementYMm, double displacementZMm, double displacementHorizontalMm, double cumulativeDisplacementMm, int fixQuality
+@JsonKey(name: 'displacement_x_mm') double displacementXMm,@JsonKey(name: 'displacement_y_mm') double displacementYMm,@JsonKey(name: 'displacement_z_mm') double displacementZMm,@JsonKey(name: 'displacement_horizontal_mm') double displacementHorizontalMm,@JsonKey(name: 'cumulative_displacement_mm') double cumulativeDisplacementMm,@JsonKey(name: 'fix_quality') String fixQuality
 });
 
 
@@ -73,7 +74,7 @@ as double,displacementZMm: null == displacementZMm ? _self.displacementZMm : dis
 as double,displacementHorizontalMm: null == displacementHorizontalMm ? _self.displacementHorizontalMm : displacementHorizontalMm // ignore: cast_nullable_to_non_nullable
 as double,cumulativeDisplacementMm: null == cumulativeDisplacementMm ? _self.cumulativeDisplacementMm : cumulativeDisplacementMm // ignore: cast_nullable_to_non_nullable
 as double,fixQuality: null == fixQuality ? _self.fixQuality : fixQuality // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 
@@ -158,7 +159,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double displacementXMm,  double displacementYMm,  double displacementZMm,  double displacementHorizontalMm,  double cumulativeDisplacementMm,  int fixQuality)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'displacement_x_mm')  double displacementXMm, @JsonKey(name: 'displacement_y_mm')  double displacementYMm, @JsonKey(name: 'displacement_z_mm')  double displacementZMm, @JsonKey(name: 'displacement_horizontal_mm')  double displacementHorizontalMm, @JsonKey(name: 'cumulative_displacement_mm')  double cumulativeDisplacementMm, @JsonKey(name: 'fix_quality')  String fixQuality)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _GnssPayload() when $default != null:
 return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZMm,_that.displacementHorizontalMm,_that.cumulativeDisplacementMm,_that.fixQuality);case _:
@@ -179,7 +180,7 @@ return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZM
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double displacementXMm,  double displacementYMm,  double displacementZMm,  double displacementHorizontalMm,  double cumulativeDisplacementMm,  int fixQuality)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'displacement_x_mm')  double displacementXMm, @JsonKey(name: 'displacement_y_mm')  double displacementYMm, @JsonKey(name: 'displacement_z_mm')  double displacementZMm, @JsonKey(name: 'displacement_horizontal_mm')  double displacementHorizontalMm, @JsonKey(name: 'cumulative_displacement_mm')  double cumulativeDisplacementMm, @JsonKey(name: 'fix_quality')  String fixQuality)  $default,) {final _that = this;
 switch (_that) {
 case _GnssPayload():
 return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZMm,_that.displacementHorizontalMm,_that.cumulativeDisplacementMm,_that.fixQuality);case _:
@@ -199,7 +200,7 @@ return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZM
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double displacementXMm,  double displacementYMm,  double displacementZMm,  double displacementHorizontalMm,  double cumulativeDisplacementMm,  int fixQuality)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'displacement_x_mm')  double displacementXMm, @JsonKey(name: 'displacement_y_mm')  double displacementYMm, @JsonKey(name: 'displacement_z_mm')  double displacementZMm, @JsonKey(name: 'displacement_horizontal_mm')  double displacementHorizontalMm, @JsonKey(name: 'cumulative_displacement_mm')  double cumulativeDisplacementMm, @JsonKey(name: 'fix_quality')  String fixQuality)?  $default,) {final _that = this;
 switch (_that) {
 case _GnssPayload() when $default != null:
 return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZMm,_that.displacementHorizontalMm,_that.cumulativeDisplacementMm,_that.fixQuality);case _:
@@ -214,15 +215,16 @@ return $default(_that.displacementXMm,_that.displacementYMm,_that.displacementZM
 @JsonSerializable()
 
 class _GnssPayload implements GnssPayload {
-  const _GnssPayload({required this.displacementXMm, required this.displacementYMm, required this.displacementZMm, required this.displacementHorizontalMm, required this.cumulativeDisplacementMm, required this.fixQuality});
+  const _GnssPayload({@JsonKey(name: 'displacement_x_mm') required this.displacementXMm, @JsonKey(name: 'displacement_y_mm') required this.displacementYMm, @JsonKey(name: 'displacement_z_mm') required this.displacementZMm, @JsonKey(name: 'displacement_horizontal_mm') required this.displacementHorizontalMm, @JsonKey(name: 'cumulative_displacement_mm') required this.cumulativeDisplacementMm, @JsonKey(name: 'fix_quality') required this.fixQuality});
   factory _GnssPayload.fromJson(Map<String, dynamic> json) => _$GnssPayloadFromJson(json);
 
-@override final  double displacementXMm;
-@override final  double displacementYMm;
-@override final  double displacementZMm;
-@override final  double displacementHorizontalMm;
-@override final  double cumulativeDisplacementMm;
-@override final  int fixQuality;
+@override@JsonKey(name: 'displacement_x_mm') final  double displacementXMm;
+@override@JsonKey(name: 'displacement_y_mm') final  double displacementYMm;
+@override@JsonKey(name: 'displacement_z_mm') final  double displacementZMm;
+@override@JsonKey(name: 'displacement_horizontal_mm') final  double displacementHorizontalMm;
+@override@JsonKey(name: 'cumulative_displacement_mm') final  double cumulativeDisplacementMm;
+/// "rtk_fixed" | "float" | "dgps" | "autonomous"
+@override@JsonKey(name: 'fix_quality') final  String fixQuality;
 
 /// Create a copy of GnssPayload
 /// with the given fields replaced by the non-null parameter values.
@@ -257,7 +259,7 @@ abstract mixin class _$GnssPayloadCopyWith<$Res> implements $GnssPayloadCopyWith
   factory _$GnssPayloadCopyWith(_GnssPayload value, $Res Function(_GnssPayload) _then) = __$GnssPayloadCopyWithImpl;
 @override @useResult
 $Res call({
- double displacementXMm, double displacementYMm, double displacementZMm, double displacementHorizontalMm, double cumulativeDisplacementMm, int fixQuality
+@JsonKey(name: 'displacement_x_mm') double displacementXMm,@JsonKey(name: 'displacement_y_mm') double displacementYMm,@JsonKey(name: 'displacement_z_mm') double displacementZMm,@JsonKey(name: 'displacement_horizontal_mm') double displacementHorizontalMm,@JsonKey(name: 'cumulative_displacement_mm') double cumulativeDisplacementMm,@JsonKey(name: 'fix_quality') String fixQuality
 });
 
 
@@ -282,7 +284,7 @@ as double,displacementZMm: null == displacementZMm ? _self.displacementZMm : dis
 as double,displacementHorizontalMm: null == displacementHorizontalMm ? _self.displacementHorizontalMm : displacementHorizontalMm // ignore: cast_nullable_to_non_nullable
 as double,cumulativeDisplacementMm: null == cumulativeDisplacementMm ? _self.cumulativeDisplacementMm : cumulativeDisplacementMm // ignore: cast_nullable_to_non_nullable
 as double,fixQuality: null == fixQuality ? _self.fixQuality : fixQuality // ignore: cast_nullable_to_non_nullable
-as int,
+as String,
   ));
 }
 

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SoilPressurePayload {
 
- double get pressureKpa; double? get temperatureCelsius;
+@JsonKey(name: 'pressure_kpa') double get pressureKpa;@JsonKey(name: 'temperature_celsius') double? get temperatureCelsius;
 /// Create a copy of SoilPressurePayload
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $SoilPressurePayloadCopyWith<$Res>  {
   factory $SoilPressurePayloadCopyWith(SoilPressurePayload value, $Res Function(SoilPressurePayload) _then) = _$SoilPressurePayloadCopyWithImpl;
 @useResult
 $Res call({
- double pressureKpa, double? temperatureCelsius
+@JsonKey(name: 'pressure_kpa') double pressureKpa,@JsonKey(name: 'temperature_celsius') double? temperatureCelsius
 });
 
 
@@ -154,7 +154,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double pressureKpa,  double? temperatureCelsius)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'pressure_kpa')  double pressureKpa, @JsonKey(name: 'temperature_celsius')  double? temperatureCelsius)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SoilPressurePayload() when $default != null:
 return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
@@ -175,7 +175,7 @@ return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double pressureKpa,  double? temperatureCelsius)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'pressure_kpa')  double pressureKpa, @JsonKey(name: 'temperature_celsius')  double? temperatureCelsius)  $default,) {final _that = this;
 switch (_that) {
 case _SoilPressurePayload():
 return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
@@ -195,7 +195,7 @@ return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double pressureKpa,  double? temperatureCelsius)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'pressure_kpa')  double pressureKpa, @JsonKey(name: 'temperature_celsius')  double? temperatureCelsius)?  $default,) {final _that = this;
 switch (_that) {
 case _SoilPressurePayload() when $default != null:
 return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
@@ -210,11 +210,11 @@ return $default(_that.pressureKpa,_that.temperatureCelsius);case _:
 @JsonSerializable()
 
 class _SoilPressurePayload implements SoilPressurePayload {
-  const _SoilPressurePayload({required this.pressureKpa, this.temperatureCelsius});
+  const _SoilPressurePayload({@JsonKey(name: 'pressure_kpa') required this.pressureKpa, @JsonKey(name: 'temperature_celsius') this.temperatureCelsius});
   factory _SoilPressurePayload.fromJson(Map<String, dynamic> json) => _$SoilPressurePayloadFromJson(json);
 
-@override final  double pressureKpa;
-@override final  double? temperatureCelsius;
+@override@JsonKey(name: 'pressure_kpa') final  double pressureKpa;
+@override@JsonKey(name: 'temperature_celsius') final  double? temperatureCelsius;
 
 /// Create a copy of SoilPressurePayload
 /// with the given fields replaced by the non-null parameter values.
@@ -249,7 +249,7 @@ abstract mixin class _$SoilPressurePayloadCopyWith<$Res> implements $SoilPressur
   factory _$SoilPressurePayloadCopyWith(_SoilPressurePayload value, $Res Function(_SoilPressurePayload) _then) = __$SoilPressurePayloadCopyWithImpl;
 @override @useResult
 $Res call({
- double pressureKpa, double? temperatureCelsius
+@JsonKey(name: 'pressure_kpa') double pressureKpa,@JsonKey(name: 'temperature_celsius') double? temperatureCelsius
 });
 
 

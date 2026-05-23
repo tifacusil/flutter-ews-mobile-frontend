@@ -20,10 +20,9 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   void _submit() {
     if (!(_formKey.currentState?.saveAndValidate() ?? false)) return;
     final values = _formKey.currentState!.value;
-    ref.read(loginViewModelProvider.notifier).login(
-          values['username'] as String,
-          values['password'] as String,
-        );
+    ref
+        .read(loginViewModelProvider.notifier)
+        .login(values['username'] as String, values['password'] as String);
   }
 
   @override
@@ -67,10 +66,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                 ),
               ],
               const SizedBox(height: 24),
-              LoginButton(
-                isLoading: loginState.isLoading,
-                onPressed: _submit,
-              ),
+              LoginButton(isLoading: loginState.isLoading, onPressed: _submit),
             ],
           ),
         ),

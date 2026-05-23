@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$RainfallPayload {
 
- double get rainfallMm; double get cumulativeRainfallMm; int get intervalMinutes;
+@JsonKey(name: 'rainfall_mm') double get rainfallMm;@JsonKey(name: 'cumulative_rainfall_mm') double get cumulativeRainfallMm;@JsonKey(name: 'interval_minutes') int get intervalMinutes;
 /// Create a copy of RainfallPayload
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $RainfallPayloadCopyWith<$Res>  {
   factory $RainfallPayloadCopyWith(RainfallPayload value, $Res Function(RainfallPayload) _then) = _$RainfallPayloadCopyWithImpl;
 @useResult
 $Res call({
- double rainfallMm, double cumulativeRainfallMm, int intervalMinutes
+@JsonKey(name: 'rainfall_mm') double rainfallMm,@JsonKey(name: 'cumulative_rainfall_mm') double cumulativeRainfallMm,@JsonKey(name: 'interval_minutes') int intervalMinutes
 });
 
 
@@ -155,7 +155,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( double rainfallMm,  double cumulativeRainfallMm,  int intervalMinutes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(name: 'rainfall_mm')  double rainfallMm, @JsonKey(name: 'cumulative_rainfall_mm')  double cumulativeRainfallMm, @JsonKey(name: 'interval_minutes')  int intervalMinutes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _RainfallPayload() when $default != null:
 return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinutes);case _:
@@ -176,7 +176,7 @@ return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinute
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( double rainfallMm,  double cumulativeRainfallMm,  int intervalMinutes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(name: 'rainfall_mm')  double rainfallMm, @JsonKey(name: 'cumulative_rainfall_mm')  double cumulativeRainfallMm, @JsonKey(name: 'interval_minutes')  int intervalMinutes)  $default,) {final _that = this;
 switch (_that) {
 case _RainfallPayload():
 return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinutes);case _:
@@ -196,7 +196,7 @@ return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinute
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( double rainfallMm,  double cumulativeRainfallMm,  int intervalMinutes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(name: 'rainfall_mm')  double rainfallMm, @JsonKey(name: 'cumulative_rainfall_mm')  double cumulativeRainfallMm, @JsonKey(name: 'interval_minutes')  int intervalMinutes)?  $default,) {final _that = this;
 switch (_that) {
 case _RainfallPayload() when $default != null:
 return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinutes);case _:
@@ -211,12 +211,12 @@ return $default(_that.rainfallMm,_that.cumulativeRainfallMm,_that.intervalMinute
 @JsonSerializable()
 
 class _RainfallPayload implements RainfallPayload {
-  const _RainfallPayload({required this.rainfallMm, required this.cumulativeRainfallMm, required this.intervalMinutes});
+  const _RainfallPayload({@JsonKey(name: 'rainfall_mm') required this.rainfallMm, @JsonKey(name: 'cumulative_rainfall_mm') required this.cumulativeRainfallMm, @JsonKey(name: 'interval_minutes') required this.intervalMinutes});
   factory _RainfallPayload.fromJson(Map<String, dynamic> json) => _$RainfallPayloadFromJson(json);
 
-@override final  double rainfallMm;
-@override final  double cumulativeRainfallMm;
-@override final  int intervalMinutes;
+@override@JsonKey(name: 'rainfall_mm') final  double rainfallMm;
+@override@JsonKey(name: 'cumulative_rainfall_mm') final  double cumulativeRainfallMm;
+@override@JsonKey(name: 'interval_minutes') final  int intervalMinutes;
 
 /// Create a copy of RainfallPayload
 /// with the given fields replaced by the non-null parameter values.
@@ -251,7 +251,7 @@ abstract mixin class _$RainfallPayloadCopyWith<$Res> implements $RainfallPayload
   factory _$RainfallPayloadCopyWith(_RainfallPayload value, $Res Function(_RainfallPayload) _then) = __$RainfallPayloadCopyWithImpl;
 @override @useResult
 $Res call({
- double rainfallMm, double cumulativeRainfallMm, int intervalMinutes
+@JsonKey(name: 'rainfall_mm') double rainfallMm,@JsonKey(name: 'cumulative_rainfall_mm') double cumulativeRainfallMm,@JsonKey(name: 'interval_minutes') int intervalMinutes
 });
 
 

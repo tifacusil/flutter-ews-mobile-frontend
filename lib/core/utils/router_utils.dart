@@ -6,8 +6,22 @@ abstract final class AppRoutes {
   static const projects = '/projects';
   static const alerts = '/alerts';
 
-  static String projectDetail(String id) => '/projects/$id';
-  static String sensorDashboard(String id) => '/sensors/$id';
+  static String projectDetail(String projectId) => '/projects/$projectId';
+
+  static String gnss(String projectId, String sensorId) =>
+      '/projects/$projectId/sensors/gnss/$sensorId';
+
+  static String rainfall(String projectId, String sensorId) =>
+      '/projects/$projectId/sensors/rainfall/$sensorId';
+
+  static String soilPressure(String projectId, String sensorId) =>
+      '/projects/$projectId/sensors/soil-pressure/$sensorId';
+
+  static String strain(String projectId, String sensorId) =>
+      '/projects/$projectId/sensors/strain/$sensorId';
+
+  static String deepDisplacement(String projectId, String sensorId) =>
+      '/projects/$projectId/sensors/deep-displacement/$sensorId';
 }
 
 extension RouterUtils on BuildContext {

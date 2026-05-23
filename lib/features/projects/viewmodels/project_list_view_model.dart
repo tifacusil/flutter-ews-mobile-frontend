@@ -1,16 +1,22 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// TODO: define a Project model and import projectRepositoryProvider
+import '../../../core/models/project.dart';
+import '../../../data/mock/mock_data.dart';
 
 part 'project_list_view_model.g.dart';
 
 @riverpod
 class ProjectListViewModel extends _$ProjectListViewModel {
   @override
-  Future<List<dynamic>> build() async {
-    // TODO: return await ref.read(projectRepositoryProvider).getProjects();
-    return [];
+  Future<List<Project>> build() async {
+    await Future.delayed(const Duration(milliseconds: 400));
+    final sorted = [...MockData.projects]..sort((a, b) {
+        if (a.activeAlertLevel != null && b.activeAlertLevel == null) return -1;
+        if (a.activeAlertLevel == null && b.activeAlertLevel != null) return 1;
+        return a.displayName.compareTo(b.displayName);
+      });
+    return sorted;
   }
 
-  Future<void> reload() => ref.refresh(projectListViewModelProvider.future);
+  void reload() => ref.invalidateSelf();
 }

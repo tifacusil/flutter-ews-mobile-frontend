@@ -3,6 +3,12 @@
 // Fallbacks are safe defaults for local development.
 // ---------------------------------------------------------------------------
 
+// Push notifications
+const String kOneSignalAppId = String.fromEnvironment(
+  'ONESIGNAL_APP_ID',
+  defaultValue: '',
+);
+
 // API
 const String kApiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',

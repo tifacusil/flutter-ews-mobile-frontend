@@ -8,12 +8,12 @@ part of 'strain_payload.dart';
 
 _StrainPayload _$StrainPayloadFromJson(Map<String, dynamic> json) =>
     _StrainPayload(
-      strainMicrostrain: (json['strainMicrostrain'] as num).toDouble(),
-      temperatureCelsius: (json['temperatureCelsius'] as num?)?.toDouble(),
+      strainMicrostrain: (json['strain_microstrain'] as num).toDouble(),
+      temperatureCelsius: (json['temperature_celsius'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$StrainPayloadToJson(_StrainPayload instance) =>
     <String, dynamic>{
-      'strainMicrostrain': instance.strainMicrostrain,
-      'temperatureCelsius': instance.temperatureCelsius,
+      'strain_microstrain': instance.strainMicrostrain,
+      'temperature_celsius': instance.temperatureCelsius,
     };

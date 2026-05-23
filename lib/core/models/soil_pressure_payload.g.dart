@@ -8,13 +8,13 @@ part of 'soil_pressure_payload.dart';
 
 _SoilPressurePayload _$SoilPressurePayloadFromJson(Map<String, dynamic> json) =>
     _SoilPressurePayload(
-      pressureKpa: (json['pressureKpa'] as num).toDouble(),
-      temperatureCelsius: (json['temperatureCelsius'] as num?)?.toDouble(),
+      pressureKpa: (json['pressure_kpa'] as num).toDouble(),
+      temperatureCelsius: (json['temperature_celsius'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$SoilPressurePayloadToJson(
   _SoilPressurePayload instance,
 ) => <String, dynamic>{
-  'pressureKpa': instance.pressureKpa,
-  'temperatureCelsius': instance.temperatureCelsius,
+  'pressure_kpa': instance.pressureKpa,
+  'temperature_celsius': instance.temperatureCelsius,
 };

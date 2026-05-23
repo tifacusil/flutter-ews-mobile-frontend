@@ -13,7 +13,7 @@ part of 'project_list_view_model.dart';
 final projectListViewModelProvider = ProjectListViewModelProvider._();
 
 final class ProjectListViewModelProvider
-    extends $AsyncNotifierProvider<ProjectListViewModel, List<dynamic>> {
+    extends $AsyncNotifierProvider<ProjectListViewModel, List<Project>> {
   ProjectListViewModelProvider._()
     : super(
         from: null,
@@ -34,19 +34,19 @@ final class ProjectListViewModelProvider
 }
 
 String _$projectListViewModelHash() =>
-    r'd0ba9fd927d6e57eb4fd64ac88b63ce1cf7dc83f';
+    r'e63ef873db841676bdfe449606c24488f65c2eb7';
 
-abstract class _$ProjectListViewModel extends $AsyncNotifier<List<dynamic>> {
-  FutureOr<List<dynamic>> build();
+abstract class _$ProjectListViewModel extends $AsyncNotifier<List<Project>> {
+  FutureOr<List<Project>> build();
   @$mustCallSuper
   @override
   void runBuild() {
-    final ref = this.ref as $Ref<AsyncValue<List<dynamic>>, List<dynamic>>;
+    final ref = this.ref as $Ref<AsyncValue<List<Project>>, List<Project>>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<AsyncValue<List<dynamic>>, List<dynamic>>,
-              AsyncValue<List<dynamic>>,
+              AnyNotifier<AsyncValue<List<Project>>, List<Project>>,
+              AsyncValue<List<Project>>,
               Object?,
               Object?
             >;

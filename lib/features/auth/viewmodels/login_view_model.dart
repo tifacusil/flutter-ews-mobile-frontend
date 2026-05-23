@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../core/services/notification_service.dart';
 
 part 'login_view_model.g.dart';
 
@@ -35,5 +39,6 @@ class LoginViewModel extends _$LoginViewModel {
       return;
     }
     state = state.copyWith(isLoading: false, isSuccess: true);
+    unawaited(NotificationService.requestPermission());
   }
 }
