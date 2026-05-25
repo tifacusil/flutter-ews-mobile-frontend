@@ -7,6 +7,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../core/utils/date_formatter.dart';
 import '../../../data/mock/mock_data.dart';
+import '../../../core/widgets/refresh_icon_button.dart';
 import '../viewmodels/soil_pressure_view_model.dart';
 
 class SoilPressureScreen extends ConsumerWidget {
@@ -82,11 +83,10 @@ class _ControlBar extends StatelessWidget {
                   active: state.showTemperature,
                   onTap: notifier.toggleTemperature,
                 ),
-                IconButton(
-                  icon: const Icon(LucideIcons.refreshCw, size: 16),
-                  tooltip: 'Refresh',
+                RefreshIconButton(
+                  isLoading: state.isLoading,
                   onPressed: notifier.refresh,
-                  visualDensity: VisualDensity.compact,
+                  size: 16,
                 ),
               ],
             ),

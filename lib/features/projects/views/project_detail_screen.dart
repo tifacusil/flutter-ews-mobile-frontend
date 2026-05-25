@@ -4,6 +4,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../core/models/sensor.dart';
 import '../../../core/utils/router_utils.dart';
+import '../../../core/widgets/refresh_icon_button.dart';
 import '../viewmodels/project_detail_view_model.dart';
 
 class ProjectDetailScreen extends ConsumerWidget {
@@ -36,8 +37,8 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(LucideIcons.refreshCw, size: 18),
+          RefreshIconButton(
+            isLoading: projectAsync.isLoading,
             onPressed: () =>
                 ref.read(projectDetailViewModelProvider(projectId).notifier).reload(),
           ),

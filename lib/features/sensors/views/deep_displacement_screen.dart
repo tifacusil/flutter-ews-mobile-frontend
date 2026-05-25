@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../data/mock/mock_data.dart';
+import '../../../core/widgets/refresh_icon_button.dart';
 import '../viewmodels/deep_displacement_view_model.dart';
 
 class DeepDisplacementScreen extends ConsumerWidget {
@@ -35,7 +36,7 @@ class DeepDisplacementScreen extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _ControlBar(notifier: notifier),
+          _ControlBar(state: state, notifier: notifier),
           Expanded(child: _Body(state: state)),
           _Legend(),
         ],
@@ -47,8 +48,9 @@ class DeepDisplacementScreen extends ConsumerWidget {
 // ── Controls ──────────────────────────────────────────────────────────────────
 
 class _ControlBar extends StatelessWidget {
-  const _ControlBar({required this.notifier});
+  const _ControlBar({required this.state, required this.notifier});
 
+  final DeepChartState state;
   final DeepDisplacementViewModel notifier;
 
   @override
@@ -61,12 +63,11 @@ class _ControlBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(LucideIcons.refreshCw, size: 16),
-            tooltip: 'Refresh',
-            onPressed: notifier.refresh,
-            visualDensity: VisualDensity.compact,
-          ),
+          RefreshIconButton(
+                  isLoading: state.isLoading,
+                  onPressed: notifier.refresh,
+                  size: 16,
+                ),
         ],
       ),
     );

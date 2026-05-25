@@ -9,12 +9,6 @@ const String kApiBaseUrl = String.fromEnvironment(
   defaultValue: 'http://localhost',
 );
 
-// User-management service — projects, users, subscriptions, devices.
-// TODO: remove once nginx proxies /api/v1/projects/ and /api/v1/users/ → 8085.
-const String kUserMgmtBaseUrl = String.fromEnvironment(
-  'USER_MGMT_BASE_URL',
-  defaultValue: 'http://localhost:8085',
-);
 
 const Duration kConnectTimeout = Duration(
   milliseconds: int.fromEnvironment(

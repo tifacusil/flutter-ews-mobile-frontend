@@ -8,6 +8,7 @@ import '../../../core/providers/providers.dart';
 import '../../../core/services/notification_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/router_utils.dart';
+import '../../../core/widgets/refresh_icon_button.dart';
 import '../viewmodels/project_list_view_model.dart';
 
 class ProjectListScreen extends ConsumerStatefulWidget {
@@ -64,8 +65,8 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
       appBar: AppBar(
         title: Text('Projects', style: theme.textTheme.h4),
         actions: [
-          IconButton(
-            icon: const Icon(LucideIcons.refreshCw, size: 18),
+          RefreshIconButton(
+            isLoading: projectsAsync.isLoading,
             onPressed: () =>
                 ref.read(projectListViewModelProvider.notifier).reload(),
           ),
