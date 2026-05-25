@@ -59,7 +59,7 @@ final class SoilPressureViewModelProvider
 }
 
 String _$soilPressureViewModelHash() =>
-    r'd4b329959e20d367247ea63ab7fa98ffb4caaee8';
+    r'f153fbb5409732477a40c667a083e636ecd1fcd4';
 
 final class SoilPressureViewModelFamily extends $Family
     with

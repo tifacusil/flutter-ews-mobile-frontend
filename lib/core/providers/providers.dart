@@ -56,3 +56,23 @@ final authStateNotifierProvider = Provider<AuthStateNotifier>(
   (ref) => AuthStateNotifier(ref.watch(authServiceProvider)),
   name: 'authStateNotifier',
 );
+
+/// Holds the most recent device-registration error message, or `null` when
+/// registration succeeded / has not been attempted yet.
+///
+/// Set by [LoginViewModel._registerDevice] on failure.
+/// Watched by [ProjectListScreen] via [ref.listen] to show a snack-bar.
+/// Reset to `null` after the snack-bar has been shown so it does not re-fire.
+final deviceRegistrationErrorProvider =
+    NotifierProvider<DeviceRegistrationErrorNotifier, String?>(
+  DeviceRegistrationErrorNotifier.new,
+  name: 'deviceRegistrationError',
+);
+
+class DeviceRegistrationErrorNotifier extends Notifier<String?> {
+  @override
+  String? build() => null;
+
+  void setError(String message) => state = message;
+  void clear() => state = null;
+}

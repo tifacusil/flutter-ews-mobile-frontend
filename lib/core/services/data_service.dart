@@ -8,10 +8,13 @@ import 'auth_service.dart';
 import 'user_management_service.dart'; // ApiException
 
 /// HTTP client that covers all data-plane endpoints via the Nginx proxy (port 80):
-///   - Projects    GET /api/v1/projects
+///   - Project     GET /api/v1/projects/{id}   (includes sensors inline)
 ///   - Sensors     GET /api/v1/projects/{id}/sensors
 ///   - Alerts      GET /api/v1/alerts
 ///   - Recipients  GET /api/v1/projects/{id}/alert-recipients
+///
+/// The project list is no longer fetched here — the flow is:
+///   subscriptions → project_ids → parallel getProject() calls.
 ///
 /// Obtain via [dataServiceProvider].
 class DataService {
@@ -78,14 +81,15 @@ class DataService {
   // Projects
   // ---------------------------------------------------------------------------
 
-  /// GET /api/v1/projects
-  Future<List<ApiProject>> getProjects() async {
+  /// GET /api/v1/projects/{project_id}
+  ///
+  /// Returns the project with its sensors list already populated.
+  Future<ApiProject> getProject(String projectId) async {
     try {
-      final res = await _dio.get<List<dynamic>>('/api/v1/projects');
-      return (res.data ?? [])
-          .cast<Map<String, dynamic>>()
-          .map(ApiProject.fromJson)
-          .toList();
+      final res = await _dio.get<Map<String, dynamic>>(
+        '/api/v1/projects/$projectId',
+      );
+      return ApiProject.fromJson(res.data!);
     } catch (e) {
       _throw(e);
     }

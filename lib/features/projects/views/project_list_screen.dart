@@ -10,11 +10,53 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/router_utils.dart';
 import '../viewmodels/project_list_view_model.dart';
 
-class ProjectListScreen extends ConsumerWidget {
+class ProjectListScreen extends ConsumerStatefulWidget {
   const ProjectListScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProjectListScreen> createState() => _ProjectListScreenState();
+}
+
+class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Listen after the first frame so the ScaffoldMessenger is mounted.
+    WidgetsBinding.instance.addPostFrameCallback((_) => _listenForDeviceError());
+  }
+
+  void _listenForDeviceError() {
+    ref.listenManual(deviceRegistrationErrorProvider, (_, error) {
+      if (error == null) return;
+      // Clear the state so it doesn't re-fire on rebuild.
+      ref.read(deviceRegistrationErrorProvider.notifier).clear();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              const Icon(Icons.notifications_off_outlined,
+                  color: Colors.white, size: 18),
+              const SizedBox(width: 10),
+              Expanded(child: Text(error)),
+            ],
+          ),
+          backgroundColor: Colors.red.shade700,
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(seconds: 5),
+          action: SnackBarAction(
+            label: 'Dismiss',
+            textColor: Colors.white,
+            onPressed: () =>
+                ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+          ),
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = ShadTheme.of(context);
     final projectsAsync = ref.watch(projectListViewModelProvider);
 
@@ -24,7 +66,8 @@ class ProjectListScreen extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(LucideIcons.refreshCw, size: 18),
-            onPressed: () => ref.read(projectListViewModelProvider.notifier).reload(),
+            onPressed: () =>
+                ref.read(projectListViewModelProvider.notifier).reload(),
           ),
           IconButton(
             icon: const Icon(LucideIcons.logOut, size: 18),
@@ -39,7 +82,8 @@ class ProjectListScreen extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(LucideIcons.circleAlert, color: theme.colorScheme.destructive),
+              Icon(LucideIcons.circleAlert,
+                  color: theme.colorScheme.destructive),
               const SizedBox(height: 8),
               Text(e.toString(), style: theme.textTheme.small),
             ],

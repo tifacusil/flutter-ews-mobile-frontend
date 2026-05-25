@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer' as dev;
 import 'dart:io';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -53,14 +54,20 @@ class LoginViewModel extends _$LoginViewModel {
       unawaited(NotificationService.requestPermission());
       unawaited(NotificationService.login(loginResp.userId.toString()));
 
-      // Register device token in the background — best-effort, never
-      // blocks or fails the login flow.
-      unawaited(_registerDevice());
+      // Capture ref-dependent objects NOW — before navigation disposes this
+      // notifier and invalidates ref.
+      final userMgmtSvc = ref.read(userManagementServiceProvider);
+      final errorNotifier = ref.read(deviceRegistrationErrorProvider.notifier);
 
       // Trigger the router redirect → /projects.
       ref.read(authStateNotifierProvider).notify();
 
       state = state.copyWith(isLoading: false, isSuccess: true);
+
+      // Register device token in the background — best-effort, never
+      // blocks or fails the login flow.  Uses pre-captured objects so the
+      // disposed ref is never touched again.
+      unawaited(_registerDevice(userMgmtSvc, errorNotifier));
     } on ApiException catch (e) {
       final msg = switch (e.statusCode) {
         401 => 'Invalid username or password.',
@@ -79,10 +86,20 @@ class LoginViewModel extends _$LoginViewModel {
   // Device registration
   // ---------------------------------------------------------------------------
 
-  Future<void> _registerDevice() async {
+  Future<void> _registerDevice(
+    UserManagementService svc,
+    DeviceRegistrationErrorNotifier errorNotifier,
+  ) async {
     try {
-      final token = await _getPushToken();
-      if (token == null) return;
+      final token = await NotificationService.getToken();
+      if (token == null) {
+        dev.log('FCM token is null — skipping device registration.',
+            name: 'LoginViewModel');
+        errorNotifier.setError('Push notifications unavailable on this device.');
+        return;
+      }
+
+      dev.log('Registering device token: $token', name: 'LoginViewModel');
 
       final platform = Platform.isAndroid
           ? 'android'
@@ -90,19 +107,19 @@ class LoginViewModel extends _$LoginViewModel {
               ? 'ios'
               : 'web';
 
-      await ref.read(userManagementServiceProvider).registerDevice(
-            DeviceRegisterRequest(
-              deviceToken: token,
-              platform: platform,
-              appVersion: '1.0.0',
-            ),
-          );
-    } catch (_) {
-      // Device registration is best-effort; a failure here must never
-      // affect the login result.
+      final response = await svc.registerDevice(
+        DeviceRegisterRequest(
+          deviceToken: token,
+          platform: platform,
+          appVersion: '1.0.0',
+        ),
+      );
+
+      dev.log('Device registered — id: ${response.deviceId}',
+          name: 'LoginViewModel');
+    } catch (e) {
+      dev.log('Device registration failed: $e', name: 'LoginViewModel');
+      errorNotifier.setError('Could not register device for push notifications.');
     }
   }
-
-  /// Returns the FCM device token for the current device.
-  Future<String?> _getPushToken() => NotificationService.getToken();
 }

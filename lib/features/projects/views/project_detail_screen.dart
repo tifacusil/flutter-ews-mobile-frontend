@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-import '../../../core/models/project.dart';
 import '../../../core/models/sensor.dart';
 import '../../../core/utils/router_utils.dart';
-import '../../../data/mock/mock_data.dart';
 import '../viewmodels/project_detail_view_model.dart';
 
 class ProjectDetailScreen extends ConsumerWidget {
@@ -16,14 +14,7 @@ class ProjectDetailScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ShadTheme.of(context);
-    final sensorsAsync = ref.watch(
-      projectDetailViewModelProvider(projectId),
-    );
-
-    final project = MockData.projects.firstWhere(
-      (p) => p.id == projectId,
-      orElse: () => Project(id: projectId, displayName: projectId, typeLabel: ''),
-    );
+    final projectAsync = ref.watch(projectDetailViewModelProvider(projectId));
 
     return Scaffold(
       appBar: AppBar(
@@ -31,13 +22,18 @@ class ProjectDetailScreen extends ConsumerWidget {
           icon: const Icon(LucideIcons.arrowLeft),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(project.displayName, style: theme.textTheme.h4),
-            if (project.typeLabel.isNotEmpty)
-              Text(project.typeLabel, style: theme.textTheme.muted),
-          ],
+        title: projectAsync.when(
+          loading: () => Text(projectId, style: theme.textTheme.h4),
+          error: (_, _) => Text(projectId, style: theme.textTheme.h4),
+          data: (p) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(p.name.isNotEmpty ? p.name : projectId,
+                  style: theme.textTheme.h4),
+              if (p.status != null)
+                Text(p.status!, style: theme.textTheme.muted),
+            ],
+          ),
         ),
         actions: [
           IconButton(
@@ -47,7 +43,7 @@ class ProjectDetailScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: sensorsAsync.when(
+      body: projectAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
           child: Padding(
@@ -64,16 +60,17 @@ class ProjectDetailScreen extends ConsumerWidget {
             ),
           ),
         ),
-        data: (sensors) => sensors.isEmpty
-            ? const _EmptyState()
-            : ListView.separated(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                itemCount: sensors.length,
-                separatorBuilder: (_, i) => const SizedBox(height: 8),
-                itemBuilder: (context, i) =>
-                    _SensorTile(projectId: projectId, sensor: sensors[i]),
-              ),
+        data: (project) {
+          final sensors = project.sensors ?? [];
+          if (sensors.isEmpty) return const _EmptyState();
+          return ListView.separated(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            itemCount: sensors.length,
+            separatorBuilder: (_, _) => const SizedBox(height: 8),
+            itemBuilder: (context, i) =>
+                _SensorTile(projectId: projectId, sensor: sensors[i]),
+          );
+        },
       ),
     );
   }

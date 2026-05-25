@@ -1,6 +1,7 @@
 import 'dart:developer' as dev;
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 
 /// Handles Firebase Cloud Messaging (FCM) for the EWS app.
 ///
@@ -35,6 +36,11 @@ abstract final class NotificationService {
     // 2. Log the registration token (useful for server-side testing).
     final token = await _fcm.getToken();
     dev.log('FCM token: $token', name: 'NotificationService');
+    debugPrint('╔══════════════════════════════════════════╗');
+    debugPrint('║           FCM DEVICE TOKEN               ║');
+    debugPrint('╠══════════════════════════════════════════╣');
+    debugPrint('║ $token');
+    debugPrint('╚══════════════════════════════════════════╝');
 
     // Refresh token whenever it rotates.
     _fcm.onTokenRefresh.listen((newToken) {

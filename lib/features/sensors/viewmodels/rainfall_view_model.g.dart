@@ -58,7 +58,7 @@ final class RainfallViewModelProvider
   }
 }
 
-String _$rainfallViewModelHash() => r'aa38eef6146c287a98360bda6c52449261d74aef';
+String _$rainfallViewModelHash() => r'18e0852734ab365825d768957384fd678da95b0a';
 
 final class RainfallViewModelFamily extends $Family
     with

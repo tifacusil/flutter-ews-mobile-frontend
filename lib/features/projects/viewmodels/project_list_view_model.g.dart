@@ -8,12 +8,36 @@ part of 'project_list_view_model.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
+/// Loads the projects accessible to the current user by:
+///
+///   1. GET /api/v1/users/{userId}/subscriptions
+///      → list of project_ids the user is subscribed to.
+///   2. GET /api/v1/projects/{project_id}  (parallel, one per subscription)
+///      → full project detail including sensors.
+///
+/// At most ~2 projects + 1 subscriptions call = 3 HTTP requests total.
 
 @ProviderFor(ProjectListViewModel)
 final projectListViewModelProvider = ProjectListViewModelProvider._();
 
+/// Loads the projects accessible to the current user by:
+///
+///   1. GET /api/v1/users/{userId}/subscriptions
+///      → list of project_ids the user is subscribed to.
+///   2. GET /api/v1/projects/{project_id}  (parallel, one per subscription)
+///      → full project detail including sensors.
+///
+/// At most ~2 projects + 1 subscriptions call = 3 HTTP requests total.
 final class ProjectListViewModelProvider
     extends $AsyncNotifierProvider<ProjectListViewModel, List<Project>> {
+  /// Loads the projects accessible to the current user by:
+  ///
+  ///   1. GET /api/v1/users/{userId}/subscriptions
+  ///      → list of project_ids the user is subscribed to.
+  ///   2. GET /api/v1/projects/{project_id}  (parallel, one per subscription)
+  ///      → full project detail including sensors.
+  ///
+  /// At most ~2 projects + 1 subscriptions call = 3 HTTP requests total.
   ProjectListViewModelProvider._()
     : super(
         from: null,
@@ -34,7 +58,16 @@ final class ProjectListViewModelProvider
 }
 
 String _$projectListViewModelHash() =>
-    r'b38cef8213fe0cb2460249b3910a8244c5a8bfae';
+    r'4bf174ffb0fbc144f1f233286274560e61e69833';
+
+/// Loads the projects accessible to the current user by:
+///
+///   1. GET /api/v1/users/{userId}/subscriptions
+///      → list of project_ids the user is subscribed to.
+///   2. GET /api/v1/projects/{project_id}  (parallel, one per subscription)
+///      → full project detail including sensors.
+///
+/// At most ~2 projects + 1 subscriptions call = 3 HTTP requests total.
 
 abstract class _$ProjectListViewModel extends $AsyncNotifier<List<Project>> {
   FutureOr<List<Project>> build();
