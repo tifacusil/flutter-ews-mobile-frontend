@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../core/utils/date_formatter.dart';
-import '../../../data/mock/mock_data.dart';
+import '../../../data/mock/mock_data.dart'; // GnssReading type
 import '../viewmodels/gnss_view_model.dart';
 
 class GnssScreen extends ConsumerWidget {
@@ -39,17 +39,51 @@ class GnssScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _ControlBar(state: state, notifier: notifier),
-          Expanded(
-            child: state.readings.isEmpty
-                ? const Center(child: Text('No data'))
-                : Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
-                    child: _GnssLineChart(readings: state.readings),
-                  ),
-          ),
+          Expanded(child: _Body(state: state)),
           _Legend(),
         ],
       ),
+    );
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+class _Body extends StatelessWidget {
+  const _Body({required this.state});
+
+  final GnssChartState state;
+
+  @override
+  Widget build(BuildContext context) {
+    if (state.isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (state.error != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(LucideIcons.circleAlert,
+                  size: 32,
+                  color: ShadTheme.of(context).colorScheme.destructive),
+              const SizedBox(height: 8),
+              Text(state.error!,
+                  style: ShadTheme.of(context).textTheme.small,
+                  textAlign: TextAlign.center),
+            ],
+          ),
+        ),
+      );
+    }
+    if (state.readings.isEmpty) {
+      return const _EmptyState();
+    }
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
+      child: _GnssLineChart(readings: state.readings),
     );
   }
 }
@@ -267,6 +301,40 @@ class _GnssLineChart extends StatelessWidget {
         dotData: const FlDotData(show: false),
         belowBarData: BarAreaData(show: false),
       );
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = ShadTheme.of(context);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              LucideIcons.satellite,
+              size: 48,
+              color: theme.colorScheme.mutedForeground,
+            ),
+            const SizedBox(height: 16),
+            Text('No readings', style: theme.textTheme.h4),
+            const SizedBox(height: 8),
+            Text(
+              'There are no RTK readings recorded\nfor this sensor in the selected period.',
+              style: theme.textTheme.muted,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 // ── Legend ────────────────────────────────────────────────────────────────────

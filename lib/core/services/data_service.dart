@@ -1,0 +1,154 @@
+import 'package:dio/dio.dart';
+
+import '../constants.dart';
+import '../models/alert.dart';
+import '../models/project.dart';
+import '../models/sensor.dart';
+import 'auth_service.dart';
+import 'user_management_service.dart'; // re-uses ApiException
+
+/// HTTP client that covers all data-plane endpoints:
+///   - Projects    GET /api/v1/projects/
+///   - Sensors     GET /api/v1/projects/{id}/sensors
+///   - Alerts      GET /api/v1/alerts/
+///   - Recipients  GET /api/v1/projects/{id}/alert-recipients
+///
+/// Obtain via [dataServiceProvider].
+class DataService {
+  DataService({required AuthService authService})
+      : _dio = _buildDio(authService);
+
+  final Dio _dio;
+
+  static Dio _buildDio(AuthService auth) {
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: kApiBaseUrl,
+        connectTimeout: kConnectTimeout,
+        receiveTimeout: kReceiveTimeout,
+        headers: {'Content-Type': 'application/json'},
+      ),
+    );
+
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          final token = auth.accessToken;
+          if (token != null) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+          handler.next(options);
+        },
+        onError: (err, handler) {
+          final response = err.response;
+          if (response != null) {
+            final body = response.data;
+            final message = (body is Map && body['error'] != null)
+                ? body['error'] as String
+                : err.message ?? 'Unknown error';
+            handler.reject(
+              DioException(
+                requestOptions: err.requestOptions,
+                response: response,
+                error: ApiException(
+                  statusCode: response.statusCode ?? 0,
+                  message: message,
+                ),
+              ),
+            );
+          } else {
+            handler.next(err);
+          }
+        },
+      ),
+    );
+
+    return dio;
+  }
+
+  Never _throw(Object error) {
+    if (error is DioException && error.error is ApiException) {
+      throw error.error as ApiException;
+    }
+    if (error is ApiException) throw error;
+    throw error;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Projects
+  // ---------------------------------------------------------------------------
+
+  /// GET /api/v1/projects/
+  ///
+  /// Returns the projects visible to the authenticated user.
+  Future<List<ApiProject>> getProjects() async {
+    try {
+      final res = await _dio.get<List<dynamic>>('/api/v1/projects/');
+      return (res.data ?? [])
+          .cast<Map<String, dynamic>>()
+          .map(ApiProject.fromJson)
+          .toList();
+    } catch (e) {
+      _throw(e);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Sensors
+  // ---------------------------------------------------------------------------
+
+  /// GET /api/v1/projects/{project_id}/sensors
+  Future<List<ApiSensor>> getSensors(String projectId) async {
+    try {
+      final res = await _dio.get<List<dynamic>>(
+        '/api/v1/projects/$projectId/sensors',
+      );
+      return (res.data ?? [])
+          .cast<Map<String, dynamic>>()
+          .map(ApiSensor.fromJson)
+          .toList();
+    } catch (e) {
+      _throw(e);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Alerts
+  // ---------------------------------------------------------------------------
+
+  /// GET /api/v1/alerts/
+  ///
+  /// Returns all currently active alerts across projects the user can see.
+  Future<List<ApiAlert>> getAlerts() async {
+    try {
+      final res = await _dio.get<List<dynamic>>('/api/v1/alerts/');
+      return (res.data ?? [])
+          .cast<Map<String, dynamic>>()
+          .map(ApiAlert.fromJson)
+          .toList();
+    } catch (e) {
+      _throw(e);
+    }
+  }
+
+  /// GET /api/v1/projects/{project_id}/alert-recipients?level={level}
+  ///
+  /// [level] defaults to `"red"`.
+  Future<List<AlertRecipient>> getAlertRecipients(
+    String projectId, {
+    String level = 'red',
+  }) async {
+    try {
+      final res = await _dio.get<List<dynamic>>(
+        '/api/v1/projects/$projectId/alert-recipients',
+        queryParameters: {'level': level},
+      );
+      return (res.data ?? [])
+          .cast<Map<String, dynamic>>()
+          .map(AlertRecipient.fromJson)
+          .toList();
+    } catch (e) {
+      _throw(e);
+    }
+  }
+}

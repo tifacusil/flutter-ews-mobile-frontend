@@ -1,44 +1,15 @@
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-
-import '../constants.dart';
-
-/// Thin wrapper around the OneSignal SDK.
+/// Placeholder notification service.
 ///
-/// Call [init] once in main() before runApp.
-/// Call [requestPermission] after the user has logged in (better conversion).
-/// Use [login] / [logout] to tie notifications to the authenticated operator.
+/// OneSignal has been removed. Wire up your preferred push provider here
+/// (e.g. firebase_messaging, flutter_local_notifications).
 abstract final class NotificationService {
-  static void init() {
-    if (kOneSignalAppId.isEmpty) return;
+  static void init() {}
 
-    OneSignal.initialize(kOneSignalAppId);
-
-    OneSignal.Notifications.addForegroundWillDisplayListener(
-      _onForegroundWillDisplay,
-    );
-    OneSignal.Notifications.addClickListener(_onClicked);
-  }
-
-  /// Ask the OS for notification permission.
-  /// Pass [fallbackToSettings] = true to re-prompt via settings if previously denied.
-  static Future<bool> requestPermission({bool fallbackToSettings = false}) {
-    return OneSignal.Notifications.requestPermission(fallbackToSettings);
-  }
+  static Future<bool> requestPermission({bool fallbackToSettings = false}) async => false;
 
   /// Associate notifications with the authenticated user (call after login).
-  static Future<void> login(String externalUserId) =>
-      OneSignal.login(externalUserId);
+  static Future<void> login(String externalUserId) async {}
 
   /// Disassociate notifications from the user (call on logout).
-  static Future<void> logout() => OneSignal.logout();
-
-  static void _onForegroundWillDisplay(OSNotificationWillDisplayEvent event) {
-    // Display the notification as-is; override here to suppress or mutate.
-    event.notification.display();
-  }
-
-  static void _onClicked(OSNotificationClickEvent event) {
-    // TODO: read event.notification.additionalData and navigate accordingly.
-    // e.g. data['project_id'] → AppRoutes.projectDetail(id)
-  }
+  static Future<void> logout() async {}
 }

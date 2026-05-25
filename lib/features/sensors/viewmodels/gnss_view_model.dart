@@ -1,6 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../data/mock/mock_data.dart';
+import '../../../core/models/gnss_payload.dart';
+import '../../../core/providers/providers.dart';
+import '../../../data/mock/mock_data.dart'; // GnssReading wrapper
 
 part 'gnss_view_model.g.dart';
 
@@ -20,24 +22,28 @@ class GnssChartState {
     required this.timeRange,
     required this.readings,
     this.isLoading = false,
+    this.error,
   });
 
   final String sensorId;
   final GnssTimeRange timeRange;
   final List<GnssReading> readings;
   final bool isLoading;
+  final String? error;
 
   GnssChartState copyWith({
     String? sensorId,
     GnssTimeRange? timeRange,
     List<GnssReading>? readings,
     bool? isLoading,
+    String? error,
   }) =>
       GnssChartState(
         sensorId: sensorId ?? this.sensorId,
         timeRange: timeRange ?? this.timeRange,
         readings: readings ?? this.readings,
         isLoading: isLoading ?? this.isLoading,
+        error: error,
       );
 }
 
@@ -47,26 +53,61 @@ class GnssViewModel extends _$GnssViewModel {
 
   @override
   GnssChartState build({required String projectId, required String sensorId}) {
+    // Kick off the first fetch immediately.
+    Future.microtask(() => _fetch(sensorId, _defaultRange));
     return GnssChartState(
       sensorId: sensorId,
       timeRange: _defaultRange,
-      readings: _filter(sensorId, _defaultRange),
+      readings: const [],
+      isLoading: true,
     );
   }
 
-  List<GnssReading> _filter(String sensorId, GnssTimeRange range) {
-    final all = MockData.gnssReadings;
-    if (all.isEmpty) return [];
-    final cutoff = all.last.timestamp.subtract(Duration(days: range.days));
-    return all.where((r) => r.timestamp.isAfter(cutoff)).toList();
+  Future<void> _fetch(String sensorId, GnssTimeRange range) async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final now = DateTime.now().toUtc();
+      final from = now.subtract(Duration(days: range.days));
+
+      final svc = ref.read(readingsServiceProvider);
+      final paged = await svc.getSensorReadings(
+        sensorId: sensorId,
+        from: from,
+        to: now,
+        sensorType: 'gnss',
+        limit: 1000,
+      );
+
+      final readings = paged.items
+          .where((d) => d.payload.isNotEmpty)
+          .map((d) {
+            try {
+              return GnssReading(
+                timestamp: d.timestamp,
+                payload: GnssPayload.fromJson(d.payload),
+              );
+            } catch (_) {
+              return null;
+            }
+          })
+          .whereType<GnssReading>()
+          .toList();
+
+      state = state.copyWith(readings: readings, isLoading: false);
+    } catch (e) {
+      state = state.copyWith(
+        readings: const [],
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
   }
 
   void selectRange(GnssTimeRange range) {
-    state = state.copyWith(
-      timeRange: range,
-      readings: _filter(state.sensorId, range),
-    );
+    state = state.copyWith(timeRange: range);
+    _fetch(state.sensorId, range);
   }
 
-  void refresh() {}
+  void refresh() => _fetch(state.sensorId, state.timeRange);
 }

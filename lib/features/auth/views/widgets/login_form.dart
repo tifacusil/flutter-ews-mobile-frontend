@@ -56,10 +56,12 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       color: theme.colorScheme.destructive,
                     ),
                     const SizedBox(width: 6),
-                    Text(
-                      loginState.error!,
-                      style: theme.textTheme.small.copyWith(
-                        color: theme.colorScheme.destructive,
+                    Expanded(
+                      child: Text(
+                        loginState.error!,
+                        style: theme.textTheme.small.copyWith(
+                          color: theme.colorScheme.destructive,
+                        ),
                       ),
                     ),
                   ],

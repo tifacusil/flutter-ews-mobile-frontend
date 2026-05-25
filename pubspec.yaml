@@ -31,7 +31,6 @@ dependencies:
   # Local storage (JWT)
   shared_preferences: ^2.2.3
   intl: ^0.20.2
-  onesignal_flutter: ^5.2.6
   shadcn_ui: ^0.54.0
 
 dev_dependencies:

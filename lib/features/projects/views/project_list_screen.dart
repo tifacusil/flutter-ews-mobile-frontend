@@ -4,9 +4,10 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 
 import '../../../core/models/alert_level.dart';
 import '../../../core/models/project.dart';
+import '../../../core/providers/providers.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/router_utils.dart';
-import '../../../data/mock/mock_data.dart';
 import '../viewmodels/project_list_view_model.dart';
 
 class ProjectListScreen extends ConsumerWidget {
@@ -25,6 +26,11 @@ class ProjectListScreen extends ConsumerWidget {
             icon: const Icon(LucideIcons.refreshCw, size: 18),
             onPressed: () => ref.read(projectListViewModelProvider.notifier).reload(),
           ),
+          IconButton(
+            icon: const Icon(LucideIcons.logOut, size: 18),
+            tooltip: 'Logout',
+            onPressed: () => _confirmLogout(context, ref),
+          ),
         ],
       ),
       body: projectsAsync.when(
@@ -39,16 +45,53 @@ class ProjectListScreen extends ConsumerWidget {
             ],
           ),
         ),
-        data: (projects) => _ProjectList(projects: projects),
+        data: (projects) => projects.isEmpty
+            ? const _EmptyState()
+            : _ProjectList(projects: projects, count: projects.length),
       ),
     );
   }
 }
 
+// ---------------------------------------------------------------------------
+// Logout helpers
+// ---------------------------------------------------------------------------
+
+Future<void> _confirmLogout(BuildContext context, WidgetRef ref) async {
+  final confirmed = await showDialog<bool>(
+    context: context,
+    builder: (ctx) => AlertDialog(
+      title: const Text('Log out?'),
+      content: const Text('You will be returned to the login screen.'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(ctx, false),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(ctx, true),
+          child: const Text('Log out'),
+        ),
+      ],
+    ),
+  );
+
+  if (confirmed != true) return;
+
+  final svc = ref.read(userManagementServiceProvider);
+  await svc.clearSession();
+
+  NotificationService.logout();
+
+  // Notify the router — redirect will send to /login.
+  ref.read(authStateNotifierProvider).notify();
+}
+
 class _ProjectList extends StatelessWidget {
-  const _ProjectList({required this.projects});
+  const _ProjectList({required this.projects, required this.count});
 
   final List<Project> projects;
+  final int count;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +105,7 @@ class _ProjectList extends StatelessWidget {
             itemBuilder: (context, i) => _ProjectTile(project: projects[i]),
           ),
         ),
-        _SummaryFooter(),
+        _SummaryFooter(count: count),
       ],
     );
   }
@@ -145,7 +188,48 @@ class _AlertDot extends StatelessWidget {
   }
 }
 
+class _EmptyState extends StatelessWidget {
+  const _EmptyState();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = ShadTheme.of(context);
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              LucideIcons.folderOpen,
+              size: 48,
+              color: theme.colorScheme.mutedForeground,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No projects yet',
+              style: theme.textTheme.h4,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'You have no project subscriptions. Contact your administrator to get access.',
+              textAlign: TextAlign.center,
+              style: theme.textTheme.small.copyWith(
+                color: theme.colorScheme.mutedForeground,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _SummaryFooter extends StatelessWidget {
+  const _SummaryFooter({required this.count});
+
+  final int count;
+
   @override
   Widget build(BuildContext context) {
     final theme = ShadTheme.of(context);
@@ -160,7 +244,7 @@ class _SummaryFooter extends StatelessWidget {
           Icon(LucideIcons.shieldCheck, size: 16, color: theme.colorScheme.mutedForeground),
           const SizedBox(width: 8),
           Text(
-            '${MockData.projects.length} projects · All sensors active',
+            '$count ${count == 1 ? 'project' : 'projects'} · All sensors active',
             style: theme.textTheme.small.copyWith(color: theme.colorScheme.mutedForeground),
           ),
         ],

@@ -34,7 +34,7 @@ final class ProjectListViewModelProvider
 }
 
 String _$projectListViewModelHash() =>
-    r'e63ef873db841676bdfe449606c24488f65c2eb7';
+    r'b38cef8213fe0cb2460249b3910a8244c5a8bfae';
 
 abstract class _$ProjectListViewModel extends $AsyncNotifier<List<Project>> {
   FutureOr<List<Project>> build();

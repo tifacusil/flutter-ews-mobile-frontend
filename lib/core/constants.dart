@@ -3,16 +3,11 @@
 // Fallbacks are safe defaults for local development.
 // ---------------------------------------------------------------------------
 
-// Push notifications
-const String kOneSignalAppId = String.fromEnvironment(
-  'ONESIGNAL_APP_ID',
-  defaultValue: '',
-);
-
-// API
+// All back-end services are behind a single reverse-proxy host.
+// Override with --dart-define-from-file=.env.json in your run config.
 const String kApiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
-  defaultValue: 'http://localhost/api/v1',
+  defaultValue: 'http://localhost',
 );
 
 const Duration kConnectTimeout = Duration(
@@ -44,6 +39,9 @@ const Duration kDefaultPollingInterval = Duration(
 // Auth
 const String kAccessTokenKey = 'access_token';
 const String kRefreshTokenKey = 'refresh_token';
+const String kUserIdKey = 'user_id';
+const String kUsernameKey = 'username';
+const String kRoleKey = 'role';
 
 // Alert thresholds (mm/day) — Bai et al. 2020
 const double kAlertBlueThreshold = 10.0;
