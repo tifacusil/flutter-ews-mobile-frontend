@@ -103,12 +103,6 @@ class LoginViewModel extends _$LoginViewModel {
     }
   }
 
-  /// Returns the device push token.
-  ///
-  /// Returns null until a push notification SDK is wired up.
-  /// Replace this body with the SDK call, e.g.:
-  ///   `return await FirebaseMessaging.instance.getToken();`
-  Future<String?> _getPushToken() async {
-    return null;
-  }
+  /// Returns the FCM device token for the current device.
+  Future<String?> _getPushToken() => NotificationService.getToken();
 }

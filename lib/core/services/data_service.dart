@@ -1,29 +1,29 @@
 import 'package:dio/dio.dart';
 
 import '../constants.dart';
-import '../models/alert.dart';
+import '../models/api_alert.dart';
 import '../models/project.dart';
 import '../models/sensor.dart';
 import 'auth_service.dart';
-import 'user_management_service.dart'; // re-uses ApiException
+import 'user_management_service.dart'; // ApiException
 
-/// HTTP client that covers all data-plane endpoints:
-///   - Projects    GET /api/v1/projects/
+/// HTTP client that covers all data-plane endpoints via the Nginx proxy (port 80):
+///   - Projects    GET /api/v1/projects
 ///   - Sensors     GET /api/v1/projects/{id}/sensors
-///   - Alerts      GET /api/v1/alerts/
+///   - Alerts      GET /api/v1/alerts
 ///   - Recipients  GET /api/v1/projects/{id}/alert-recipients
 ///
 /// Obtain via [dataServiceProvider].
 class DataService {
   DataService({required AuthService authService})
-      : _dio = _buildDio(authService);
+      : _dio = _buildDio(authService, kApiBaseUrl);
 
   final Dio _dio;
 
-  static Dio _buildDio(AuthService auth) {
+  static Dio _buildDio(AuthService auth, String baseUrl) {
     final dio = Dio(
       BaseOptions(
-        baseUrl: kApiBaseUrl,
+        baseUrl: baseUrl,
         connectTimeout: kConnectTimeout,
         receiveTimeout: kReceiveTimeout,
         headers: {'Content-Type': 'application/json'},
@@ -78,12 +78,10 @@ class DataService {
   // Projects
   // ---------------------------------------------------------------------------
 
-  /// GET /api/v1/projects/
-  ///
-  /// Returns the projects visible to the authenticated user.
+  /// GET /api/v1/projects
   Future<List<ApiProject>> getProjects() async {
     try {
-      final res = await _dio.get<List<dynamic>>('/api/v1/projects/');
+      final res = await _dio.get<List<dynamic>>('/api/v1/projects');
       return (res.data ?? [])
           .cast<Map<String, dynamic>>()
           .map(ApiProject.fromJson)
@@ -117,11 +115,9 @@ class DataService {
   // ---------------------------------------------------------------------------
 
   /// GET /api/v1/alerts/
-  ///
-  /// Returns all currently active alerts across projects the user can see.
   Future<List<ApiAlert>> getAlerts() async {
     try {
-      final res = await _dio.get<List<dynamic>>('/api/v1/alerts/');
+      final res = await _dio.get<List<dynamic>>('/api/v1/alerts');
       return (res.data ?? [])
           .cast<Map<String, dynamic>>()
           .map(ApiAlert.fromJson)
@@ -132,8 +128,6 @@ class DataService {
   }
 
   /// GET /api/v1/projects/{project_id}/alert-recipients?level={level}
-  ///
-  /// [level] defaults to `"red"`.
   Future<List<AlertRecipient>> getAlertRecipients(
     String projectId, {
     String level = 'red',

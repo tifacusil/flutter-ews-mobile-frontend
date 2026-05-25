@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,14 +8,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'core/providers/providers.dart';
 import 'core/services/notification_service.dart';
 import 'core/theme/app_theme.dart';
+import 'firebase_options.dart';
 import 'router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   final prefs = await SharedPreferences.getInstance();
 
-  NotificationService.init();
+  await NotificationService.init();
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

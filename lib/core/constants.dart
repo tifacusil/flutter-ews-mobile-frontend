@@ -3,11 +3,17 @@
 // Fallbacks are safe defaults for local development.
 // ---------------------------------------------------------------------------
 
-// All back-end services are behind a single reverse-proxy host.
-// Override with --dart-define-from-file=.env.json in your run config.
+// Reverse-proxy host (auth, sensors, readings, alerts).
 const String kApiBaseUrl = String.fromEnvironment(
   'API_BASE_URL',
   defaultValue: 'http://localhost',
+);
+
+// User-management service — projects, users, subscriptions, devices.
+// TODO: remove once nginx proxies /api/v1/projects/ and /api/v1/users/ → 8085.
+const String kUserMgmtBaseUrl = String.fromEnvironment(
+  'USER_MGMT_BASE_URL',
+  defaultValue: 'http://localhost:8085',
 );
 
 const Duration kConnectTimeout = Duration(

@@ -36,13 +36,13 @@ final userManagementServiceProvider = Provider<UserManagementService>(
   name: 'userManagementService',
 );
 
-/// The [ReadingsService] singleton for the readings API (port 8083).
+/// The [ReadingsService] singleton — sensor time-series readings.
 final readingsServiceProvider = Provider<ReadingsService>(
   (ref) => ReadingsService(authService: ref.watch(authServiceProvider)),
   name: 'readingsService',
 );
 
-/// The [DataService] singleton for the data API (port 8084).
+/// The [DataService] singleton — projects, sensors, alerts, recipients.
 final dataServiceProvider = Provider<DataService>(
   (ref) => DataService(authService: ref.watch(authServiceProvider)),
   name: 'dataService',

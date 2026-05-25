@@ -36,14 +36,7 @@ class DeepDisplacementScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _ControlBar(notifier: notifier),
-          Expanded(
-            child: state.readings.isEmpty
-                ? const Center(child: Text('No data'))
-                : Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
-                    child: _DeepDisplacementChart(readings: state.readings),
-                  ),
-          ),
+          Expanded(child: _Body(state: state)),
           _Legend(),
         ],
       ),
@@ -76,6 +69,59 @@ class _ControlBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+class _Body extends StatelessWidget {
+  const _Body({required this.state});
+  final DeepChartState state;
+
+  @override
+  Widget build(BuildContext context) {
+    if (state.isLoading) return const Center(child: CircularProgressIndicator());
+    if (state.error != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(LucideIcons.circleAlert, size: 32,
+                  color: ShadTheme.of(context).colorScheme.destructive),
+              const SizedBox(height: 8),
+              Text(state.error!, style: ShadTheme.of(context).textTheme.small,
+                  textAlign: TextAlign.center),
+            ],
+          ),
+        ),
+      );
+    }
+    if (state.readings.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(LucideIcons.arrowDownToLine, size: 48,
+                  color: ShadTheme.of(context).colorScheme.mutedForeground),
+              const SizedBox(height: 16),
+              Text('No readings', style: ShadTheme.of(context).textTheme.h4),
+              const SizedBox(height: 8),
+              Text('No borehole tilt data available.',
+                  style: ShadTheme.of(context).textTheme.muted,
+                  textAlign: TextAlign.center),
+            ],
+          ),
+        ),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
+      child: _DeepDisplacementChart(readings: state.readings),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../data/mock/mock_data.dart';
+import '../../../core/models/rainfall_payload.dart';
+import '../../../core/providers/providers.dart';
+import '../../../data/mock/mock_data.dart'; // RainfallReading wrapper
 
 part 'rainfall_view_model.g.dart';
 
@@ -19,21 +21,29 @@ class RainfallChartState {
     required this.sensorId,
     required this.timeRange,
     required this.readings,
+    this.isLoading = false,
+    this.error,
   });
 
   final String sensorId;
   final RainfallTimeRange timeRange;
   final List<RainfallReading> readings;
+  final bool isLoading;
+  final String? error;
 
   RainfallChartState copyWith({
     String? sensorId,
     RainfallTimeRange? timeRange,
     List<RainfallReading>? readings,
+    bool? isLoading,
+    String? error,
   }) =>
       RainfallChartState(
         sensorId: sensorId ?? this.sensorId,
         timeRange: timeRange ?? this.timeRange,
         readings: readings ?? this.readings,
+        isLoading: isLoading ?? this.isLoading,
+        error: error,
       );
 }
 
@@ -43,23 +53,60 @@ class RainfallViewModel extends _$RainfallViewModel {
 
   @override
   RainfallChartState build({required String projectId, required String sensorId}) {
+    Future.microtask(() => _fetch(sensorId, _defaultRange));
     return RainfallChartState(
       sensorId: sensorId,
       timeRange: _defaultRange,
-      readings: _filter(_defaultRange),
+      readings: const [],
+      isLoading: true,
     );
   }
 
-  List<RainfallReading> _filter(RainfallTimeRange range) {
-    final all = MockData.rainfallReadings;
-    if (all.isEmpty) return [];
-    final cutoff = all.last.timestamp.subtract(Duration(hours: range.hours));
-    return all.where((r) => r.timestamp.isAfter(cutoff)).toList();
+  Future<void> _fetch(String sensorId, RainfallTimeRange range) async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final now = DateTime.now().toUtc();
+      final from = now.subtract(Duration(hours: range.hours));
+
+      final svc = ref.read(readingsServiceProvider);
+      final paged = await svc.getSensorReadings(
+        sensorId: sensorId,
+        from: from,
+        to: now,
+        sensorType: 'rainfall',
+        limit: 1000,
+      );
+
+      final readings = paged.items
+          .where((d) => d.payload.isNotEmpty)
+          .map((d) {
+            try {
+              return RainfallReading(
+                timestamp: d.timestamp,
+                payload: RainfallPayload.fromJson(d.payload),
+              );
+            } catch (_) {
+              return null;
+            }
+          })
+          .whereType<RainfallReading>()
+          .toList();
+
+      state = state.copyWith(readings: readings, isLoading: false);
+    } catch (e) {
+      state = state.copyWith(
+        readings: const [],
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
   }
 
   void selectRange(RainfallTimeRange range) {
-    state = state.copyWith(timeRange: range, readings: _filter(range));
+    state = state.copyWith(timeRange: range);
+    _fetch(state.sensorId, range);
   }
 
-  void refresh() {}
+  void refresh() => _fetch(state.sensorId, state.timeRange);
 }

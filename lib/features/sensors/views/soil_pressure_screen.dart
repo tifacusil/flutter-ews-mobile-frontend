@@ -39,17 +39,7 @@ class SoilPressureScreen extends ConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           _ControlBar(state: state, notifier: notifier),
-          Expanded(
-            child: state.readings.isEmpty
-                ? const Center(child: Text('No data'))
-                : Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
-                    child: _SoilPressureChart(
-                      readings: state.readings,
-                      showTemperature: state.showTemperature,
-                    ),
-                  ),
-          ),
+          Expanded(child: _Body(state: state)),
           _Legend(showTemperature: state.showTemperature),
         ],
       ),
@@ -175,6 +165,62 @@ class _ToggleChip extends StatelessWidget {
             color: active ? theme.colorScheme.primary : null,
           ),
         ),
+      ),
+    );
+  }
+}
+
+// ── Body ──────────────────────────────────────────────────────────────────────
+
+class _Body extends StatelessWidget {
+  const _Body({required this.state});
+  final SoilPressureChartState state;
+
+  @override
+  Widget build(BuildContext context) {
+    if (state.isLoading) return const Center(child: CircularProgressIndicator());
+    if (state.error != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(LucideIcons.circleAlert, size: 32,
+                  color: ShadTheme.of(context).colorScheme.destructive),
+              const SizedBox(height: 8),
+              Text(state.error!, style: ShadTheme.of(context).textTheme.small,
+                  textAlign: TextAlign.center),
+            ],
+          ),
+        ),
+      );
+    }
+    if (state.readings.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(LucideIcons.layers, size: 48,
+                  color: ShadTheme.of(context).colorScheme.mutedForeground),
+              const SizedBox(height: 16),
+              Text('No readings', style: ShadTheme.of(context).textTheme.h4),
+              const SizedBox(height: 8),
+              Text('No soil pressure data for the selected period.',
+                  style: ShadTheme.of(context).textTheme.muted,
+                  textAlign: TextAlign.center),
+            ],
+          ),
+        ),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 16, 16, 8),
+      child: _SoilPressureChart(
+        readings: state.readings,
+        showTemperature: state.showTemperature,
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../data/mock/mock_data.dart';
+import '../../../core/models/soil_pressure_payload.dart';
+import '../../../core/providers/providers.dart';
+import '../../../data/mock/mock_data.dart'; // SoilPressureReading wrapper
 
 part 'soil_pressure_view_model.g.dart';
 
@@ -20,24 +22,32 @@ class SoilPressureChartState {
     required this.timeRange,
     required this.readings,
     this.showTemperature = true,
+    this.isLoading = false,
+    this.error,
   });
 
   final String sensorId;
   final SoilPressureTimeRange timeRange;
   final List<SoilPressureReading> readings;
   final bool showTemperature;
+  final bool isLoading;
+  final String? error;
 
   SoilPressureChartState copyWith({
     String? sensorId,
     SoilPressureTimeRange? timeRange,
     List<SoilPressureReading>? readings,
     bool? showTemperature,
+    bool? isLoading,
+    String? error,
   }) =>
       SoilPressureChartState(
         sensorId: sensorId ?? this.sensorId,
         timeRange: timeRange ?? this.timeRange,
         readings: readings ?? this.readings,
         showTemperature: showTemperature ?? this.showTemperature,
+        isLoading: isLoading ?? this.isLoading,
+        error: error,
       );
 }
 
@@ -47,27 +57,64 @@ class SoilPressureViewModel extends _$SoilPressureViewModel {
 
   @override
   SoilPressureChartState build({required String projectId, required String sensorId}) {
+    Future.microtask(() => _fetch(sensorId, _defaultRange));
     return SoilPressureChartState(
       sensorId: sensorId,
       timeRange: _defaultRange,
-      readings: _filter(_defaultRange),
+      readings: const [],
+      isLoading: true,
     );
   }
 
-  List<SoilPressureReading> _filter(SoilPressureTimeRange range) {
-    final all = MockData.soilPressureReadings;
-    if (all.isEmpty) return [];
-    final cutoff = all.last.timestamp.subtract(Duration(days: range.days));
-    return all.where((r) => r.timestamp.isAfter(cutoff)).toList();
+  Future<void> _fetch(String sensorId, SoilPressureTimeRange range) async {
+    state = state.copyWith(isLoading: true, error: null);
+
+    try {
+      final now = DateTime.now().toUtc();
+      final from = now.subtract(Duration(days: range.days));
+
+      final svc = ref.read(readingsServiceProvider);
+      final paged = await svc.getSensorReadings(
+        sensorId: sensorId,
+        from: from,
+        to: now,
+        sensorType: 'soil_pressure',
+        limit: 1000,
+      );
+
+      final readings = paged.items
+          .where((d) => d.payload.isNotEmpty)
+          .map((d) {
+            try {
+              return SoilPressureReading(
+                timestamp: d.timestamp,
+                payload: SoilPressurePayload.fromJson(d.payload),
+              );
+            } catch (_) {
+              return null;
+            }
+          })
+          .whereType<SoilPressureReading>()
+          .toList();
+
+      state = state.copyWith(readings: readings, isLoading: false);
+    } catch (e) {
+      state = state.copyWith(
+        readings: const [],
+        isLoading: false,
+        error: e.toString(),
+      );
+    }
   }
 
   void selectRange(SoilPressureTimeRange range) {
-    state = state.copyWith(timeRange: range, readings: _filter(range));
+    state = state.copyWith(timeRange: range);
+    _fetch(state.sensorId, range);
   }
 
   void toggleTemperature() {
     state = state.copyWith(showTemperature: !state.showTemperature);
   }
 
-  void refresh() {}
+  void refresh() => _fetch(state.sensorId, state.timeRange);
 }
