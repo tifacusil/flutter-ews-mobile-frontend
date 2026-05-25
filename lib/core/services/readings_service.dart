@@ -110,4 +110,64 @@ class ReadingsService {
       _throw(e);
     }
   }
+
+  // ---------------------------------------------------------------------------
+  // Fetch-all helper (automatic pagination)
+  // ---------------------------------------------------------------------------
+
+  /// Fetches **all** readings for a sensor in the given window, automatically
+  /// issuing additional parallel requests when the server has more pages.
+  ///
+  /// Use this instead of [getSensorReadings] whenever the result count may
+  /// exceed one page (e.g. rainfall at 5-min intervals over a week = ~2 000
+  /// rows; GNSS over 6 months = ~4 000 rows).
+  ///
+  /// [pageSize] controls how many rows are requested per HTTP call (max the
+  /// server allows — currently 1 000).
+  Future<List<ReadingDto>> getAllSensorReadings({
+    required String sensorId,
+    DateTime? from,
+    DateTime? to,
+    String? sensorType,
+    String? fixQuality,
+    int pageSize = 1000,
+  }) async {
+    // First page — also tells us the total row count.
+    final first = await getSensorReadings(
+      sensorId: sensorId,
+      from: from,
+      to: to,
+      sensorType: sensorType,
+      fixQuality: fixQuality,
+      offset: 0,
+      limit: pageSize,
+    );
+
+    if (first.total <= first.items.length) return first.items;
+
+    // How many additional pages do we need?
+    final remaining = first.total - first.items.length;
+    final extraPages = (remaining / pageSize).ceil();
+
+    // Fetch them all in parallel.
+    final futures = List.generate(
+      extraPages,
+      (i) => getSensorReadings(
+        sensorId: sensorId,
+        from: from,
+        to: to,
+        sensorType: sensorType,
+        fixQuality: fixQuality,
+        offset: first.items.length + i * pageSize,
+        limit: pageSize,
+      ),
+    );
+
+    final pages = await Future.wait(futures);
+
+    return [
+      ...first.items,
+      for (final page in pages) ...page.items,
+    ];
+  }
 }

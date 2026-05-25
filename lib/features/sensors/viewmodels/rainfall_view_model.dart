@@ -70,15 +70,14 @@ class RainfallViewModel extends _$RainfallViewModel {
       final from = now.subtract(Duration(hours: range.hours));
 
       final svc = ref.read(readingsServiceProvider);
-      final paged = await svc.getSensorReadings(
+      final items = await svc.getAllSensorReadings(
         sensorId: sensorId,
         from: from,
         to: now,
         sensorType: 'rainfall',
-        limit: 1000,
       );
 
-      final readings = paged.items
+      final readings = items
           .where((d) => d.payload.isNotEmpty)
           .map((d) {
             try {

@@ -74,15 +74,14 @@ class StrainViewModel extends _$StrainViewModel {
       final from = now.subtract(Duration(days: range.days));
 
       final svc = ref.read(readingsServiceProvider);
-      final paged = await svc.getSensorReadings(
+      final items = await svc.getAllSensorReadings(
         sensorId: sensorId,
         from: from,
         to: now,
         sensorType: 'strain',
-        limit: 1000,
       );
 
-      final readings = paged.items
+      final readings = items
           .where((d) => d.payload.isNotEmpty)
           .map((d) {
             try {
