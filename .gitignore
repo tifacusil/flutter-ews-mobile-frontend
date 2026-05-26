@@ -47,3 +47,4 @@ app.*.map.json
 
 # Environment — copy .env.example.json → .env.json and fill in your values
 .env.json
+android/app/google-services.json

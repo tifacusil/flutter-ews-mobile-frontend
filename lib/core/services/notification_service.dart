@@ -28,6 +28,11 @@ abstract final class NotificationService {
   /// with the backend. Set via [setTokenRefreshHandler]; cleared on [logout].
   static Future<void> Function(String newToken)? _tokenRefreshHandler;
 
+  /// Called inside [logout] with the current token so the caller can revoke it
+  /// on the backend before FCM deletes it. Set via [setRevokeHandler]; cleared
+  /// after it is called so it never fires twice.
+  static Future<void> Function(String token)? _revokeHandler;
+
   /// Broadcast stream of [RemoteMessage]s that the user tapped (foreground
   /// banner, background, or terminated state). Listen to this stream to drive
   /// deep-link navigation.
@@ -43,10 +48,15 @@ abstract final class NotificationService {
   /// Initialises FCM and the local notifications plugin: requests permission,
   /// registers foreground/background handlers, and logs the device token.
   static Future<void> init() async {
+    _log('init() started');
+
     // 1. Set up flutter_local_notifications ──────────────────────────────────
 
+    // 'ic_notification' resolves to @drawable/ic_notification — Android
+    // requires notification icons to be a monochrome drawable, not the
+    // full-colour adaptive launcher icon.
     const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('ic_notification');
     const iosSettings = DarwinInitializationSettings(
       // We let firebase_messaging own the permission prompt; disable the
       // duplicate request from flutter_local_notifications.
@@ -55,24 +65,29 @@ abstract final class NotificationService {
       requestSoundPermission: false,
     );
 
-    await _localNotifications.initialize(
+    final initialized = await _localNotifications.initialize(
       settings:
           const InitializationSettings(android: androidSettings, iOS: iosSettings),
       onDidReceiveNotificationResponse: _onLocalNotificationTap,
     );
+    _log('flutter_local_notifications initialized: $initialized');
 
     // Create the high-importance Android channel (no-op if it already exists).
     final androidPlugin = _localNotifications
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>();
-    await androidPlugin?.createNotificationChannel(
-      const AndroidNotificationChannel(
+    if (androidPlugin != null) {
+      const channel = AndroidNotificationChannel(
         _kChannelId,
         _kChannelName,
         description: 'EWS landslide alerts and sensor notifications',
         importance: Importance.high,
-      ),
-    );
+      );
+      await androidPlugin.createNotificationChannel(channel);
+      _log('Android channel created: id=$_kChannelId  importance=high');
+    } else {
+      _log('AndroidFlutterLocalNotificationsPlugin not available (non-Android platform)');
+    }
 
     // 2. Request FCM permission ───────────────────────────────────────────────
     // (Also covers POST_NOTIFICATIONS on Android 13+.)
@@ -82,39 +97,37 @@ abstract final class NotificationService {
       badge: true,
       sound: true,
     );
-    dev.log(
-      'FCM permission: ${settings.authorizationStatus}',
-      name: 'NotificationService',
-    );
+    _log('FCM permission status: ${settings.authorizationStatus}  '
+        'alert=${settings.alert}  badge=${settings.badge}  sound=${settings.sound}');
 
-    // 3. Log the registration token (useful for server-side testing) ─────────
+    // 3. Log the registration token ───────────────────────────────────────────
 
     final token = await _fcm.getToken();
-    dev.log('FCM token: $token', name: 'NotificationService');
+    _log('FCM token: $token');
 
     // 4. Token rotation ───────────────────────────────────────────────────────
 
     _fcm.onTokenRefresh.listen((newToken) {
-      dev.log('FCM token refreshed: $newToken', name: 'NotificationService');
+      _log('FCM token rotated — new token: $newToken');
       _tokenRefreshHandler?.call(newToken).catchError((Object e) {
-        dev.log('Token refresh re-registration failed: $e',
-            name: 'NotificationService');
+        _log('Token refresh re-registration failed: $e', error: true);
       });
     });
 
     // 5. Message handlers ─────────────────────────────────────────────────────
 
-    // Foreground: show a local notification banner so the alert is never silent.
     FirebaseMessaging.onMessage.listen(_onForegroundMessage);
-
-    // Background tap (app in background, user taps the FCM notification).
     FirebaseMessaging.onMessageOpenedApp.listen(_onMessageOpenedApp);
 
-    // Cold-start tap (app was terminated, user tapped the notification).
     final initial = await _fcm.getInitialMessage();
     if (initial != null) {
+      _log('Cold-start message found: id=${initial.messageId}');
       _handleMessage(initial, source: 'initial');
+    } else {
+      _log('No cold-start message');
     }
+
+    _log('init() complete');
   }
 
   /// Requests notification permission explicitly (e.g. from a settings screen).
@@ -123,8 +136,11 @@ abstract final class NotificationService {
   static Future<bool> requestPermission(
       {bool fallbackToSettings = false}) async {
     final settings = await _fcm.requestPermission();
-    return settings.authorizationStatus == AuthorizationStatus.authorized ||
-        settings.authorizationStatus == AuthorizationStatus.provisional;
+    final granted =
+        settings.authorizationStatus == AuthorizationStatus.authorized ||
+            settings.authorizationStatus == AuthorizationStatus.provisional;
+    _log('requestPermission() → granted=$granted  status=${settings.authorizationStatus}');
+    return granted;
   }
 
   /// Subscribe to the user-specific FCM topic so the backend can target
@@ -134,7 +150,7 @@ abstract final class NotificationService {
   static Future<void> login(String externalUserId) async {
     final topic = 'user_$externalUserId';
     await _fcm.subscribeToTopic(topic);
-    dev.log('FCM subscribed to topic: $topic', name: 'NotificationService');
+    _log('Subscribed to FCM topic: $topic');
   }
 
   /// Returns the current FCM registration token, or `null` if unavailable.
@@ -149,16 +165,46 @@ abstract final class NotificationService {
   static void setTokenRefreshHandler(
       Future<void> Function(String newToken) handler) {
     _tokenRefreshHandler = handler;
+    _log('Token refresh handler registered');
   }
 
-  /// Unsubscribes from all user-scoped topics and deletes the FCM token on
-  /// sign-out.
+  /// Registers [handler] to be called inside [logout] with the current FCM
+  /// token so the backend can revoke it before FCM deletes it locally.
+  ///
+  /// Call this after a successful device registration on login. The handler is
+  /// cleared automatically after it fires so it never executes twice.
+  static void setRevokeHandler(Future<void> Function(String token) handler) {
+    _revokeHandler = handler;
+    _log('Revoke handler registered');
+  }
+
+  /// Revokes the current FCM token on the backend (if a revoke handler is set),
+  /// then deletes the token locally and clears all handlers.
   ///
   /// Call this when the user logs out.
   static Future<void> logout() async {
+    // Get the token *before* FCM deletes it — once deleted getToken() returns
+    // a brand-new token, making the revoke call useless.
+    final token = await _fcm.getToken();
+    _log('logout() — current token: $token');
+
+    if (token != null && _revokeHandler != null) {
+      try {
+        _log('Revoking token on backend…');
+        await _revokeHandler!(token);
+        _log('Token revoked on backend successfully');
+      } catch (e) {
+        // Best-effort — never block logout if the server is unreachable.
+        _log('Backend revoke failed (continuing logout): $e', error: true);
+      }
+    } else {
+      _log('No revoke handler set — skipping backend revocation');
+    }
+
+    _revokeHandler = null;
     _tokenRefreshHandler = null;
     await _fcm.deleteToken();
-    dev.log('FCM token deleted', name: 'NotificationService');
+    _log('FCM token deleted locally — all handlers cleared');
   }
 
   // ---------------------------------------------------------------------------
@@ -170,66 +216,96 @@ abstract final class NotificationService {
   /// FCM suppresses the system notification in this state, so we re-fire it
   /// via [_localNotifications] so the user always sees an alert banner.
   static void _onForegroundMessage(RemoteMessage message) {
-    dev.log(
-      'FCM foreground: ${message.messageId} — ${message.notification?.title}',
-      name: 'NotificationService',
-    );
+    _log('Foreground message received'
+        '\n  id       : ${message.messageId}'
+        '\n  title    : ${message.notification?.title}'
+        '\n  body     : ${message.notification?.body}'
+        '\n  data     : ${message.data}');
 
     final notification = message.notification;
-    if (notification == null) return; // data-only message — nothing to display
+    if (notification == null) {
+      _log('No notification field — data-only message, skipping local banner');
+      return;
+    }
 
-    _localNotifications.show(
-      // Use a stable ID derived from the message so duplicate deliveries
-      // replace rather than stack.
-      id: message.hashCode,
-      title: notification.title,
-      body: notification.body,
-      notificationDetails: NotificationDetails(
-        android: AndroidNotificationDetails(
-          _kChannelId,
-          _kChannelName,
-          importance: Importance.high,
-          priority: Priority.high,
-          // Show the small app icon as the notification icon.
-          icon: '@mipmap/ic_launcher',
-        ),
-        iOS: const DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-        ),
-      ),
-      // Serialise the FCM data payload as the local notification payload
-      // so we can drive deep-link navigation when the banner is tapped.
-      payload: jsonEncode(message.data),
-    );
+    final notifId = message.hashCode;
+    _log('Posting local notification  id=$notifId  channel=$_kChannelId');
+
+    _localNotifications
+        .show(
+          id: notifId,
+          title: notification.title,
+          body: notification.body,
+          notificationDetails: NotificationDetails(
+            android: AndroidNotificationDetails(
+              _kChannelId,
+              _kChannelName,
+              importance: Importance.high,
+              priority: Priority.high,
+              icon: 'ic_notification',
+            ),
+            iOS: const DarwinNotificationDetails(
+              presentAlert: true,
+              presentBadge: true,
+              presentSound: true,
+            ),
+          ),
+          // Serialise the FCM data payload as the local notification payload
+          // so we can drive deep-link navigation when the banner is tapped.
+          payload: jsonEncode(message.data),
+        )
+        .then((_) => _log('Local notification posted successfully  id=$notifId'))
+        .catchError((Object e) =>
+            _log('Local notification post FAILED  id=$notifId  error=$e',
+                error: true));
   }
 
   /// Called when the user taps a local notification banner (foreground only).
   static void _onLocalNotificationTap(NotificationResponse response) {
+    _log('Local notification tapped'
+        '\n  actionId : ${response.actionId}'
+        '\n  id       : ${response.id}'
+        '\n  payload  : ${response.payload}');
+
     final raw = response.payload;
-    if (raw == null || raw.isEmpty) return;
+    if (raw == null || raw.isEmpty) {
+      _log('Empty payload — cannot navigate');
+      return;
+    }
 
     try {
       final data = jsonDecode(raw) as Map<String, dynamic>;
+      _log('Emitting tap event to notificationTaps stream  data=$data');
       // Wrap in a RemoteMessage so the navigation logic in main.dart is shared
       // with background / cold-start taps.
       _tapController.add(RemoteMessage(data: data));
     } catch (e) {
-      dev.log('Failed to parse local notification payload: $e',
-          name: 'NotificationService');
+      _log('Failed to parse local notification payload: $e', error: true);
     }
   }
 
   static void _onMessageOpenedApp(RemoteMessage message) {
+    _log('Background notification tapped (onMessageOpenedApp)'
+        '\n  id    : ${message.messageId}'
+        '\n  title : ${message.notification?.title}'
+        '\n  data  : ${message.data}');
     _handleMessage(message, source: 'openedApp');
   }
 
   static void _handleMessage(RemoteMessage message, {required String source}) {
-    dev.log(
-      'FCM [$source]: ${message.messageId} — ${message.notification?.title}',
-      name: 'NotificationService',
-    );
+    _log('Emitting tap event to notificationTaps stream  source=$source  data=${message.data}');
     _tapController.add(message);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Logging helper
+  // ---------------------------------------------------------------------------
+
+  static void _log(String message, {bool error = false}) {
+    dev.log(
+      message,
+      name: 'NotificationService',
+      level: error ? 1000 : 0,
+    );
   }
 }

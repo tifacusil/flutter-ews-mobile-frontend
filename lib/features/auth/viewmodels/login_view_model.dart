@@ -132,6 +132,14 @@ class LoginViewModel extends _$LoginViewModel {
         );
         dev.log('Rotated token re-registered', name: 'LoginViewModel');
       });
+
+      // On logout, revoke this device's token on the backend so the server
+      // stops targeting it with push notifications immediately.
+      NotificationService.setRevokeHandler((token) async {
+        dev.log('Revoking device token: $token', name: 'LoginViewModel');
+        await svc.revokeDevice(token, reason: 'user_logout');
+        dev.log('Device token revoked', name: 'LoginViewModel');
+      });
     } catch (e) {
       dev.log('Device registration failed: $e', name: 'LoginViewModel');
       errorNotifier.setError('Could not register device for push notifications.');

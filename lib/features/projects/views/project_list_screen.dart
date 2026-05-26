@@ -130,19 +130,11 @@ Future<void> _confirmLogout(BuildContext context, WidgetRef ref) async {
 
   final svc = ref.read(userManagementServiceProvider);
 
-  // Grab the token *before* FCM deletes it so we can revoke it on the backend.
-  final deviceToken = await NotificationService.getToken();
-  if (deviceToken != null) {
-    try {
-      await svc.revokeDevice(deviceToken, reason: 'user_logout');
-    } catch (_) {
-      // Best-effort — don't block logout if the server is unreachable.
-    }
-  }
-
+  // NotificationService.logout() revokes the token on the backend (via the
+  // handler registered at login) and then deletes it locally.
   await Future.wait([
-    NotificationService.logout(), // deletes FCM token
-    svc.clearSession(),           // wipes JWT + user data
+    NotificationService.logout(),
+    svc.clearSession(), // wipes JWT + user data
   ]);
 
   // Notify the router — redirect will send to /login.
