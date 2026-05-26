@@ -117,6 +117,21 @@ class LoginViewModel extends _$LoginViewModel {
 
       dev.log('Device registered — id: ${response.deviceId}',
           name: 'LoginViewModel');
+
+      // When the FCM token rotates, re-register the new token with the backend
+      // automatically so the server always has a valid token for this device.
+      NotificationService.setTokenRefreshHandler((newToken) async {
+        dev.log('Re-registering rotated FCM token: $newToken',
+            name: 'LoginViewModel');
+        await svc.registerDevice(
+          DeviceRegisterRequest(
+            deviceToken: newToken,
+            platform: platform,
+            appVersion: '1.0.0',
+          ),
+        );
+        dev.log('Rotated token re-registered', name: 'LoginViewModel');
+      });
     } catch (e) {
       dev.log('Device registration failed: $e', name: 'LoginViewModel');
       errorNotifier.setError('Could not register device for push notifications.');
