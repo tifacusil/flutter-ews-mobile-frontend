@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import 'core/providers/providers.dart';
 import 'features/alerts/views/alert_history_screen.dart';
+import 'features/alerts/views/recent_alerts_screen.dart';
 import 'features/auth/views/login_screen.dart';
 import 'features/projects/views/project_detail_screen.dart';
 import 'features/projects/views/project_list_screen.dart';
@@ -88,6 +89,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final projectId = state.uri.queryParameters['projectId'] ?? '';
           return AlertHistoryScreen(projectId: projectId);
+        },
+      ),
+      GoRoute(
+        path: '/alerts/recent',
+        builder: (context, state) {
+          final limitStr = state.uri.queryParameters['limit'];
+          final limit = int.tryParse(limitStr ?? '') ?? 50;
+          return RecentAlertsScreen(limit: limit);
         },
       ),
     ],

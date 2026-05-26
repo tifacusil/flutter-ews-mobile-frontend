@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import '../constants.dart';
 import '../models/api_alert.dart';
 import '../models/project.dart';
+import '../models/recent_alert.dart';
 import '../models/sensor.dart';
 import 'auth_service.dart';
 import 'user_management_service.dart'; // ApiException
@@ -117,6 +118,27 @@ class DataService {
   // ---------------------------------------------------------------------------
   // Alerts
   // ---------------------------------------------------------------------------
+
+  /// GET /api/v1/alerts/recent?limit={limit}
+  ///
+  /// Returns the most recent alerts across all projects the authenticated
+  /// user has access to (filtered server-side by subscription).
+  Future<List<RecentAlert>> getRecentAlerts({int limit = 50}) async {
+    try {
+      final res = await _dio.get<Map<String, dynamic>>(
+        '/api/v1/alerts/recent',
+        queryParameters: {'limit': limit},
+      );
+      final data = res.data;
+      final list = (data?['alerts'] as List<dynamic>?) ?? [];
+      return list
+          .cast<Map<String, dynamic>>()
+          .map(RecentAlert.fromJson)
+          .toList();
+    } catch (e) {
+      _throw(e);
+    }
+  }
 
   /// GET /api/v1/alerts/
   Future<List<ApiAlert>> getAlerts() async {

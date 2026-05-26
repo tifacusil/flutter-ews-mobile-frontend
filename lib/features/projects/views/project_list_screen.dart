@@ -71,6 +71,11 @@ class _ProjectListScreenState extends ConsumerState<ProjectListScreen> {
                 ref.read(projectListViewModelProvider.notifier).reload(),
           ),
           IconButton(
+            icon: const Icon(LucideIcons.bell, size: 18),
+            tooltip: 'Recent Alerts',
+            onPressed: () => context.pushTo(AppRoutes.recentAlerts),
+          ),
+          IconButton(
             icon: const Icon(LucideIcons.logOut, size: 18),
             tooltip: 'Logout',
             onPressed: () => _confirmLogout(context, ref),

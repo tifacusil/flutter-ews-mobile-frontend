@@ -5,6 +5,7 @@ abstract final class AppRoutes {
   static const login = '/login';
   static const projects = '/projects';
   static const alerts = '/alerts';
+  static const recentAlerts = '/alerts/recent';
 
   static String projectDetail(String projectId) => '/projects/$projectId';
 

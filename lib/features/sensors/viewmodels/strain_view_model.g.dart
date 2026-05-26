@@ -58,7 +58,7 @@ final class StrainViewModelProvider
   }
 }
 
-String _$strainViewModelHash() => r'7ca666463594c479ddcbfc6ed835ddc0f9d09fb0';
+String _$strainViewModelHash() => r'2ca08e977188a07ea9eb38e0b5a747713329d059';
 
 final class StrainViewModelFamily extends $Family
     with

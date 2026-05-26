@@ -58,7 +58,7 @@ final class GnssViewModelProvider
   }
 }
 
-String _$gnssViewModelHash() => r'51e953ef7e3981555a22ca456e72f4e126f042e2';
+String _$gnssViewModelHash() => r'45d7c61d184917c16b2805437c3ddae1fcd51ec0';
 
 final class GnssViewModelFamily extends $Family
     with
