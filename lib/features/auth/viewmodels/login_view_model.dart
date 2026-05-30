@@ -56,7 +56,6 @@ class LoginViewModel extends _$LoginViewModel {
 
       // Capture ref-dependent objects NOW — before navigation disposes this
       // notifier and invalidates ref.
-      final userMgmtSvc = ref.read(userManagementServiceProvider);
       final errorNotifier = ref.read(deviceRegistrationErrorProvider.notifier);
 
       // Trigger the router redirect → /projects.
@@ -67,7 +66,7 @@ class LoginViewModel extends _$LoginViewModel {
       // Register device token in the background — best-effort, never
       // blocks or fails the login flow.  Uses pre-captured objects so the
       // disposed ref is never touched again.
-      unawaited(_registerDevice(userMgmtSvc, errorNotifier));
+      unawaited(_registerDevice(svc, errorNotifier));
     } on ApiException catch (e) {
       final msg = switch (e.statusCode) {
         401 => 'Invalid username or password.',
@@ -131,14 +130,6 @@ class LoginViewModel extends _$LoginViewModel {
           ),
         );
         dev.log('Rotated token re-registered', name: 'LoginViewModel');
-      });
-
-      // On logout, revoke this device's token on the backend so the server
-      // stops targeting it with push notifications immediately.
-      NotificationService.setRevokeHandler((token) async {
-        dev.log('Revoking device token: $token', name: 'LoginViewModel');
-        await svc.revokeDevice(token, reason: 'user_logout');
-        dev.log('Device token revoked', name: 'LoginViewModel');
       });
     } catch (e) {
       dev.log('Device registration failed: $e', name: 'LoginViewModel');

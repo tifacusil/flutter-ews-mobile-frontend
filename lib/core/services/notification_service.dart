@@ -28,11 +28,6 @@ abstract final class NotificationService {
   /// with the backend. Set via [setTokenRefreshHandler]; cleared on [logout].
   static Future<void> Function(String newToken)? _tokenRefreshHandler;
 
-  /// Called inside [logout] with the current token so the caller can revoke it
-  /// on the backend before FCM deletes it. Set via [setRevokeHandler]; cleared
-  /// after it is called so it never fires twice.
-  static Future<void> Function(String token)? _revokeHandler;
-
   /// Broadcast stream of [RemoteMessage]s that the user tapped (foreground
   /// banner, background, or terminated state). Listen to this stream to drive
   /// deep-link navigation.
@@ -148,9 +143,9 @@ abstract final class NotificationService {
   ///
   /// Call this after a successful login.
   static Future<void> login(String externalUserId) async {
-    final topic = 'user_$externalUserId';
-    await _fcm.subscribeToTopic(topic);
-    _log('Subscribed to FCM topic: $topic');
+    final userTopic = 'user_$externalUserId';
+    await _fcm.subscribeToTopic(userTopic);
+    _log('Subscribed to FCM topic: $userTopic');
   }
 
   /// Returns the current FCM registration token, or `null` if unavailable.
@@ -168,43 +163,14 @@ abstract final class NotificationService {
     _log('Token refresh handler registered');
   }
 
-  /// Registers [handler] to be called inside [logout] with the current FCM
-  /// token so the backend can revoke it before FCM deletes it locally.
+  /// Deletes the local FCM token and clears all handlers.
   ///
-  /// Call this after a successful device registration on login. The handler is
-  /// cleared automatically after it fires so it never executes twice.
-  static void setRevokeHandler(Future<void> Function(String token) handler) {
-    _revokeHandler = handler;
-    _log('Revoke handler registered');
-  }
-
-  /// Revokes the current FCM token on the backend (if a revoke handler is set),
-  /// then deletes the token locally and clears all handlers.
-  ///
-  /// Call this when the user logs out.
+  /// Call this when the user logs out, after the server has already revoked
+  /// all device tokens via POST /api/v1/auth/logout.
   static Future<void> logout() async {
-    // Get the token *before* FCM deletes it — once deleted getToken() returns
-    // a brand-new token, making the revoke call useless.
-    final token = await _fcm.getToken();
-    _log('logout() — current token: $token');
-
-    if (token != null && _revokeHandler != null) {
-      try {
-        _log('Revoking token on backend…');
-        await _revokeHandler!(token);
-        _log('Token revoked on backend successfully');
-      } catch (e) {
-        // Best-effort — never block logout if the server is unreachable.
-        _log('Backend revoke failed (continuing logout): $e', error: true);
-      }
-    } else {
-      _log('No revoke handler set — skipping backend revocation');
-    }
-
-    _revokeHandler = null;
     _tokenRefreshHandler = null;
     await _fcm.deleteToken();
-    _log('FCM token deleted locally — all handlers cleared');
+    _log('logout() — FCM token deleted locally, handlers cleared');
   }
 
   // ---------------------------------------------------------------------------

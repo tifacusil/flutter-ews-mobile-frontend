@@ -121,6 +121,19 @@ class UserManagementService {
     }
   }
 
+  /// POST /api/v1/auth/logout
+  ///
+  /// Revokes all active device tokens for the authenticated user server-side.
+  /// The JWT itself remains valid until expiry — discard it client-side after
+  /// this call completes.
+  Future<void> logout() async {
+    try {
+      await _dio.post<void>('/api/v1/auth/logout');
+    } catch (e) {
+      _throw(e);
+    }
+  }
+
   /// POST /api/v1/auth/register
   ///
   /// Creating an `admin` account requires the caller to already be an
@@ -220,20 +233,6 @@ class UserManagementService {
         data: request.toJson(),
       );
       return DeviceRegisterResponse.fromJson(res.data!);
-    } catch (e) {
-      _throw(e);
-    }
-  }
-
-  /// POST /api/v1/devices/{device_token}/revoke
-  ///
-  /// Marks the token as revoked. Call on logout.
-  Future<void> revokeDevice(String deviceToken, {String reason = 'user_logout'}) async {
-    try {
-      await _dio.post<void>(
-        '/api/v1/devices/$deviceToken/revoke',
-        data: {'reason': reason},
-      );
     } catch (e) {
       _throw(e);
     }

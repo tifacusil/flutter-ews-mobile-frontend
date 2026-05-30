@@ -130,12 +130,17 @@ Future<void> _confirmLogout(BuildContext context, WidgetRef ref) async {
 
   final svc = ref.read(userManagementServiceProvider);
 
-  // NotificationService.logout() revokes the token on the backend (via the
-  // handler registered at login) and then deletes it locally.
-  await Future.wait([
-    NotificationService.logout(),
-    svc.clearSession(), // wipes JWT + user data
-  ]);
+  // Revoke all device tokens server-side — best-effort, never block logout.
+  // Must run before clearSession so the JWT is still present for the request.
+  try {
+    await svc.logout();
+  } catch (_) {}
+
+  // Delete the local FCM token and clear handlers.
+  await NotificationService.logout();
+
+  // JWT is no longer needed; wipe local session data.
+  await svc.clearSession();
 
   // Notify the router — redirect will send to /login.
   ref.read(authStateNotifierProvider).notify();

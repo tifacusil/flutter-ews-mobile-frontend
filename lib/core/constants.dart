@@ -48,6 +48,12 @@ const double kAlertBlueThreshold = 10.0;
 const double kAlertOrangeThreshold = 15.0;
 const double kAlertRedThreshold = 20.0;
 
+// FCM topics
+const String kFcmTopicAlertsShangtan = String.fromEnvironment(
+  'FCM_TOPIC_ALERTS_SHANGTAN',
+  defaultValue: 'alerts-shangtan',
+);
+
 // Sites
 const String kSiteShangtan = 'GXZM';
 const String kSiteLingzhan = 'LZ';
