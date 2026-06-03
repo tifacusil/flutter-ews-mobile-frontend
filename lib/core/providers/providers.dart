@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'auth_notifier.dart';
+import '../services/analysis_service.dart';
 import '../services/auth_service.dart';
 import '../services/data_service.dart';
 import '../services/readings_service.dart';
@@ -46,6 +47,12 @@ final readingsServiceProvider = Provider<ReadingsService>(
 final dataServiceProvider = Provider<DataService>(
   (ref) => DataService(authService: ref.watch(authServiceProvider)),
   name: 'dataService',
+);
+
+/// The [AnalysisService] singleton — data-analysis microservice.
+final analysisServiceProvider = Provider<AnalysisService>(
+  (_) => AnalysisService(),
+  name: 'analysisService',
 );
 
 /// Notifies the router whenever auth state changes (login / logout).

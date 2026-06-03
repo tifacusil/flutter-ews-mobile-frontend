@@ -23,6 +23,9 @@ abstract final class AppRoutes {
 
   static String deepDisplacement(String projectId, String sensorId) =>
       '/projects/$projectId/sensors/deep-displacement/$sensorId';
+
+  static String analysis(String projectId, String sensorType, String sensorId) =>
+      '/projects/$projectId/sensors/$sensorType/$sensorId/analysis';
 }
 
 extension RouterUtils on BuildContext {

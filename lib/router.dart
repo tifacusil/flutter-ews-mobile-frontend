@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'core/providers/providers.dart';
 import 'features/alerts/views/alert_history_screen.dart';
 import 'features/alerts/views/recent_alerts_screen.dart';
+import 'features/analysis/views/analysis_screen.dart';
 import 'features/auth/views/login_screen.dart';
 import 'features/projects/views/project_detail_screen.dart';
 import 'features/projects/views/project_list_screen.dart';
@@ -81,6 +82,14 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/projects/:projectId/sensors/deep-displacement/:sensorId',
         builder: (context, state) => DeepDisplacementScreen(
           projectId: state.pathParameters['projectId']!,
+          sensorId: state.pathParameters['sensorId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/projects/:projectId/sensors/:sensorType/:sensorId/analysis',
+        builder: (context, state) => AnalysisScreen(
+          projectId: state.pathParameters['projectId']!,
+          sensorType: state.pathParameters['sensorType']!,
           sensorId: state.pathParameters['sensorId']!,
         ),
       ),

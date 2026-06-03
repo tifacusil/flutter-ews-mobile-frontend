@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
+import '../../../core/constants.dart';
 import '../../../core/utils/date_formatter.dart';
+import '../../../core/utils/router_utils.dart';
 import '../../../data/mock/mock_data.dart'; // GnssReading type
 import '../../../core/widgets/refresh_icon_button.dart';
 import '../viewmodels/gnss_view_model.dart';
@@ -35,6 +37,15 @@ class GnssScreen extends ConsumerWidget {
             Text(sensorId, style: theme.textTheme.muted),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(LucideIcons.chartSpline),
+            tooltip: 'Analyse',
+            onPressed: () => context.pushTo(
+              AppRoutes.analysis(projectId, kSensorTypeGnss, sensorId),
+            ),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
