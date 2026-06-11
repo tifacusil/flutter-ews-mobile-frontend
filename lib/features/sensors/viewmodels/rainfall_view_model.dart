@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/rainfall_payload.dart';
@@ -93,7 +94,8 @@ class RainfallViewModel extends _$RainfallViewModel {
           .toList();
 
       state = state.copyWith(readings: readings, isLoading: false);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('RainfallViewModel error: $e\n$st');
       state = state.copyWith(
         readings: const [],
         isLoading: false,

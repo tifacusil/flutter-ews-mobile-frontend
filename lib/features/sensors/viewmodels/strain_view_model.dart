@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/strain_payload.dart';
@@ -97,7 +98,8 @@ class StrainViewModel extends _$StrainViewModel {
           .toList();
 
       state = state.copyWith(readings: readings, isLoading: false);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('StrainViewModel error: $e\n$st');
       state = state.copyWith(
         readings: const [],
         isLoading: false,

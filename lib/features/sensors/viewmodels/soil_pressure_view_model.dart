@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/soil_pressure_payload.dart';
@@ -97,7 +98,8 @@ class SoilPressureViewModel extends _$SoilPressureViewModel {
           .toList();
 
       state = state.copyWith(readings: readings, isLoading: false);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('SoilPressureViewModel error: $e\n$st');
       state = state.copyWith(
         readings: const [],
         isLoading: false,

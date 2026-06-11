@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/deep_displacement_payload.dart';
@@ -78,7 +79,8 @@ class DeepDisplacementViewModel extends _$DeepDisplacementViewModel {
         ..sort((a, b) => a.payload.depthM.compareTo(b.payload.depthM));
 
       state = state.copyWith(readings: readings, isLoading: false);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('DeepDisplacementViewModel error: $e\n$st');
       state = state.copyWith(
         readings: const [],
         isLoading: false,

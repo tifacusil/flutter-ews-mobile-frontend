@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:developer' as dev;
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/device.dart';
@@ -73,7 +75,8 @@ class LoginViewModel extends _$LoginViewModel {
         _ => e.message,
       };
       state = state.copyWith(isLoading: false, error: msg);
-    } catch (_) {
+    } catch (e, st) {
+      debugPrint('LOGIN ERROR: $e\n$st');
       state = state.copyWith(
         isLoading: false,
         error: 'Could not reach the server. Check your connection.',

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../constants.dart';
 import '../models/reading.dart';
@@ -38,6 +39,10 @@ class ReadingsService {
           final response = err.response;
           if (response != null) {
             final body = response.data;
+            debugPrint(
+              'ReadingsService ${response.statusCode} '
+              '${err.requestOptions.path}: $body',
+            );
             final message = (body is Map && body['error'] != null)
                 ? body['error'] as String
                 : err.message ?? 'Unknown error';
@@ -57,6 +62,12 @@ class ReadingsService {
         },
       ),
     );
+
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+      logPrint: (o) => debugPrint(o.toString()),
+    ));
 
     return dio;
   }

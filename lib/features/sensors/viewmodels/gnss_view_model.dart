@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/models/gnss_payload.dart';
@@ -94,7 +95,8 @@ class GnssViewModel extends _$GnssViewModel {
           .toList();
 
       state = state.copyWith(readings: readings, isLoading: false);
-    } catch (e) {
+    } catch (e, st) {
+      debugPrint('GnssViewModel error: $e\n$st');
       state = state.copyWith(
         readings: const [],
         isLoading: false,
